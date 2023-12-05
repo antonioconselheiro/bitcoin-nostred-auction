@@ -1,0 +1,10 @@
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1mre;
+
+  button + button {
+    margin-top: .5rem;
+  }
+}

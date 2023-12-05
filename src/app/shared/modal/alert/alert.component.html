@@ -1,0 +1,12 @@
+<div>
+  svg
+</div>
+<h2>{{titulo ? titulo : mensagem}}</h2>
+<p *ngIf="titulo && mensagem">{{mensagem}}</p>
+<div>
+  <button
+    type="button" (click)="close()"
+  >
+    Ok
+  </button>
+</div>
