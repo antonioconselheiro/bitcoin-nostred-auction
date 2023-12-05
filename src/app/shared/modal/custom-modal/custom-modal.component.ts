@@ -3,13 +3,13 @@ import { ModalBuilder } from '../modal.builder';
 import { ModalDirective } from '../modal.directive';
 
 @Component({
-  selector: 'tw-custom-modal',
+  selector: 'auc-custom-modal',
   templateUrl: './custom-modal.component.html',
   styleUrls: ['./custom-modal.component.scss']
 })
 export class CustomModalComponent extends ModalDirective {
 
-  tagNameElement = 'tw-custom-modal';
+  tagNameElement = 'auc-custom-modal';
   modalInject$ = ModalBuilder.modalInject$;
 
   @ViewChild('modalContainer', { read: ViewContainerRef })
