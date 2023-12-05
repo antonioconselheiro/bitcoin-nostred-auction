@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuctionsListComponent } from './auctions-list.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: AuctionsListComponent
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AuctionsListRouting { }

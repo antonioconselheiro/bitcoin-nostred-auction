@@ -12,7 +12,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "auction",
+      "prefix": "auc",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
