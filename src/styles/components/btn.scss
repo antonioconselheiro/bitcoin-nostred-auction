@@ -1,0 +1,45 @@
+.btn {
+  border-color: rgba(0, 0, 0, .3);
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 15%), inset 0 -2px 0 rgb(0 0 0 / 15%);
+  padding: 0.25rem 1rem;
+  border-radius: 4px;
+  font-size: 17px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin: .25rem;
+  }
+
+  &:not(:disabled):not(.disabled) {
+    background-color: white;
+    color:black;
+
+    &:hover {
+      background-color: #bbb;
+    }
+
+    &:active,
+    &.active {
+      box-shadow: inset 0 0 6px 3px rgb(0 0 0 / 55%) !important;
+      color:rgb(0 0 0 / 75%) !important;
+      background-color: #ddd;
+    }
+
+    &.btn-primary {
+      background-color: #c80505;
+      color:#ffffff;
+
+      &:hover {
+        background-color: #ae0404;
+      }
+
+      &:active,
+      &.active {
+        color:rgb(255 255 255 / 75%) !important;
+        background-color: #940303;
+      }
+    }
+  }
+}
