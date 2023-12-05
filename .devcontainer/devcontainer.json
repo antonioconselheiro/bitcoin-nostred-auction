@@ -1,0 +1,23 @@
+{
+  "name": "Existing Docker Compose (Extend)",
+  "dockerComposeFile": [
+    "docker-compose.yml"
+  ],
+  "service": "bitcoin-nostred-auction-dev",
+	"workspaceFolder": "/bitcoin-nostred-auction",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Angular.ng-template",
+				"ms-vscode.vscode-typescript-next",
+				"dbaeumer.vscode-eslint",
+				"eamodio.gitlens",
+				"ms-azuretools.vscode-docker",
+				"naumovs.color-highlight",
+				"manishsencha.readme-preview",
+				"wix.vscode-import-cost",
+				"chaseadamsio.vscode-theme-neon-night"
+			]
+		}
+	}
+}
