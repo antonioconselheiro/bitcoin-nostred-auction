@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
+import { AuthModalModule } from '@shared/auth-modal/auth-modal.module';
+import { ModalModule } from '@shared/modal/modal.module';
 
 @NgModule({
   declarations: [
@@ -9,9 +11,12 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    ModalModule,
+    AuthModalModule,
     AppRouting
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

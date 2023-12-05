@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthModalComponent } from '@shared/auth-modal/auth-modal.component';
+import { ModalService } from '@shared/modal/modal.service';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +12,18 @@ export class AppComponent {
   //  incluir filtro de pesquisa dos itens em leilão
   //  incluir ordenação de itens em leilão por qual estiver com mais atividade de lances e maiores valores
   //  incluir sistema de lance sobre o NIP de produto/serviço
+
+  constructor(
+    private modalService: ModalService
+  ) { }
+
+  addNostrAccount(): void {
+    this.modalService
+      .createModal(AuthModalComponent)
+      .build();
+  }
+
+  selectNostrAccount(): void {
+
+  }
 }

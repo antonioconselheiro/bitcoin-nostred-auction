@@ -10,29 +10,17 @@
     <li>
       <a routerLink="/pages/my-bids">my bids</a>
     </li>
+    <li>
+      <a>network</a>
+    </li>
   </ul>
 </nav>
 
 <router-outlet></router-outlet>
 
 <footer>
-  <button class="btn btn-primary" type="button">Add Nostr Account</button>
-  <button class="btn btn-primary" type="button">Select Nostr Account</button>
+  <button (click)="addNostrAccount()" class="btn btn-primary" type="button">Add Nostr Account</button>
+  <button (click)="selectNostrAccount()" class="btn btn-primary" type="button">Select Nostr Account</button>
 </footer>
 
-<nav>
-  <ul>
-    <li>
-      <a>Write NSEC</a>
-    </li>
-    <li>
-      <a>NSEC from Clipboard</a>
-    </li>
-    <li>
-      <a>NSEC from QRCode</a>
-    </li>
-    <li>
-      <a>NSEC from Encrypted QRCode</a>
-    </li>
-  </ul>
-</nav>
+<auc-custom-modal></auc-custom-modal>
