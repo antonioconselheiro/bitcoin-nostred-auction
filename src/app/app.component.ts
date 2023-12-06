@@ -20,6 +20,7 @@ export class AppComponent {
   addNostrAccount(): void {
     this.modalService
       .createModal(AuthModalComponent)
+      .setTitle('Select an authentication method')
       .build();
   }
 

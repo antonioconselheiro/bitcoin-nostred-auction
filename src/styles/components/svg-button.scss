@@ -29,7 +29,7 @@ button.svg-button {
     div[role=img] {
       width: 17.2px;
       min-height: 17px;
-      background-color: var(--lowContrast);
+      background-color: black;
       mask-repeat: no-repeat;
       mask-size: contain;
     }
@@ -89,7 +89,7 @@ button.svg-button {
   [role=img] {
     height: 20px;
     width: 20px;
-    background-color: var(--lowContrast);
+    background-color: black;
     display: inline-block;
     mask-repeat: no-repeat;
     mask-size: contain;
