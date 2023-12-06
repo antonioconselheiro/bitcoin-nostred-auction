@@ -28,6 +28,16 @@ const routes: Routes = [
   },
 
   {
+    path: 'network',
+    loadChildren: () => import('./pages/network/network.module').then(m => m.NetworkModule)
+  },
+
+  {
+    path: 'nsec-manager',
+    loadChildren: () => import('./pages/nsec-manager/nsec-manager.module').then(m => m.NsecManagerModule)
+  },
+
+  {
     path: '',
     redirectTo: 'auctions-list',
     pathMatch: 'full'
