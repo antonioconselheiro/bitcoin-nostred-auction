@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NsecManagerComponent } from './nsec-manager.component';
+import { NsecManagerModalComponent } from './nsec-manager-modal.component';
+
+
 
 @NgModule({
   declarations: [
-    NsecManagerComponent
+    NsecManagerModalComponent
   ],
   imports: [
     CommonModule
   ]
 })
-export class NsecManagerModule { }
+export class NsecManagerModalModule { }

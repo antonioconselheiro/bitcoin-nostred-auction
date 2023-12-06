@@ -33,11 +33,6 @@ const routes: Routes = [
   },
 
   {
-    path: 'nsec-manager',
-    loadChildren: () => import('./pages/nsec-manager/nsec-manager.module').then(m => m.NsecManagerModule)
-  },
-
-  {
     path: '',
     redirectTo: 'auctions-list',
     pathMatch: 'full'
