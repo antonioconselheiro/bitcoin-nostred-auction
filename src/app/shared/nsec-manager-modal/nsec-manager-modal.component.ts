@@ -20,7 +20,7 @@ export class NsecManagerModalComponent extends ModalableDirective<void, void> {
     ]],
 
     pin: ['', [
-      Validators.required.bind(this),
+      Validators.required.bind(this)
     ]]
   });
 
@@ -28,5 +28,9 @@ export class NsecManagerModalComponent extends ModalableDirective<void, void> {
     private fb: FormBuilder
   ) {
     super();
+  }
+
+  onSubmit(): void {
+
   }
 }

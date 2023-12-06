@@ -4,6 +4,7 @@ import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
 import { AuthModalModule } from '@shared/auth-modal/auth-modal.module';
 import { ModalModule } from '@shared/modal/modal.module';
+import { NsecManagerModalModule } from '@shared/nsec-manager-modal/nsec-manager-modal.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ModalModule } from '@shared/modal/modal.module';
     BrowserModule,
     ModalModule,
     AuthModalModule,
+    NsecManagerModalModule,
     AppRouting
   ],
   bootstrap: [
