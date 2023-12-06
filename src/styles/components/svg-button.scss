@@ -24,7 +24,7 @@ button.svg-button {
 
   .svg-wrapper {
     border-radius: 50%;
-    padding: .5rem;
+    padding: .25rem;
 
     div[role=img] {
       width: 17.2px;
@@ -43,7 +43,6 @@ button.svg-button {
   }
 
   &:not([disabled]) {
-
     &:hover,
     &:active {
       &.bordered {

@@ -34,6 +34,7 @@ export class QrcodeReadComponent {
   private async readQRCode(video: HTMLVideoElement): Promise<void> {
     const qrScanner = new QrScanner(
       video, result => {
+        debugger;
         this.router.navigate([ 'open' ], {
           state: {
             encrypted: result.data

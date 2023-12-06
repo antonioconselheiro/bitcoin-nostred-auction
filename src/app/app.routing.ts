@@ -23,6 +23,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'qrcode-read',
+    loadChildren: () => import('./pages/qrcode-read/qrcode-read.module').then(m => m.QrcodeReadModule)
+  },
+
+  {
     path: '',
     redirectTo: 'auctions-list',
     pathMatch: 'full'
