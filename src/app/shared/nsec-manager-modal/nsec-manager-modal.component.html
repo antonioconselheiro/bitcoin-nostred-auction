@@ -4,6 +4,7 @@
       <input
         required
         #authModalNsecField
+        [class.has-value]="authModalNsecField.value"
         id="authModalNsecField"
         type="password"
         name="nsec"
@@ -24,6 +25,7 @@
         required
         id="authModalPinField"
         #authModalPinField
+        [class.has-value]="authModalPinField.value"
         type="password"
         name="pin"
         maxlength="64"
