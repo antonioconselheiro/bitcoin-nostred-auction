@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="accountForm" (submit)="onSubmit()" novalidate autocomplete="off">
   <div>
     <div class="floating-label">
       <input
