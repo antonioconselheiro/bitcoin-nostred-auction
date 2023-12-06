@@ -1,15 +1,45 @@
 <form>
   <div>
-    <label for="nostrsecret">nostr secret (nsec):</label>
-    <input id="nostrsecret" type="password" />
-  </div>
+    <div class="floating-label">
+      <input
+        required
+        #authModalNsecField
+        id="authModalNsecField"
+        type="password"
+        name="nsec"
+        maxlength="64"
+        formControlName="nsec"
+      />
+      <label for="authModalNsecField">Nostr Secret (nsec)</label>
 
-  <div>
-    <label for="pin">pin:</label>
-    <input id="pin" type="password" />
+      <button type="button" class="bordered svg-button icon-show">
+        <div class="svg-wrapper">
+          <div role="img"></div>
+        </div>
+      </button>
+    </div>
+
+    <div class="floating-label">
+      <input
+        required
+        id="authModalPinField"
+        #authModalPinField
+        type="password"
+        name="pin"
+        maxlength="64"
+        formControlName="pin"
+      />
+      <label for="authModalPinField">PIN</label>
+
+      <button type="button" class="bordered svg-button icon-show">
+        <div class="svg-wrapper">
+          <div role="img"></div>
+        </div>
+      </button>
+    </div>
   </div>
 </form>
 
-<button type="button">Just Login</button>
-<button type="button">Add account & Login</button>
+<button class="btn" type="button">Login</button>
+<button class="btn" type="button">Add account & Login</button>
 

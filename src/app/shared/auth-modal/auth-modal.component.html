@@ -1,9 +1,9 @@
 <nav>
   <ul>
-    <li>
+    <li (click)="chooseWrite()">
       <a>Write NSEC</a>
     </li>
-    <li routerLink="/qrcode-read" (click)="close()">
+    <li (click)="chooseFromQrcode()">
       <a>NSEC from QRCode</a>
     </li>
   </ul>
