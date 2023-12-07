@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
+import { IAuctionBid } from '@domain/auction-bid.model';
 import { NostrEventKind } from '@domain/nostr-event-kind.enum';
 import { NostrUser } from '@domain/nostr-user';
 import { IProduct } from '@domain/product.model';
-import { Event, UnsignedEvent, getEventHash, getSignature, nip04 } from 'nostr-tools';
+import moment from 'moment';
+import { Event, UnsignedEvent, getEventHash, getSignature } from 'nostr-tools';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class NostrEventFactory {
 
   private getCurrentTimestamp(): number {
@@ -51,7 +51,11 @@ export class NostrEventFactory {
    * NIP 15
    * https://github.com/nostr-protocol/nips/blob/master/15.md
    */
-  async createProductEvent(you: Required<NostrUser>, product: IProduct): Promise<Event> {
+  async createProductEvent(
+    you: Required<NostrUser>,
+    product: IProduct,
+    expirationDate: moment.Moment
+  ): Promise<Event> {
     const unsignedEvent = {
       id: '',
       stall_id: product.stall,
@@ -66,7 +70,11 @@ export class NostrEventFactory {
       quantity: 1, // this is an auction software, not a marketplace
       // eslint-disable-next-line @typescript-eslint/naming-convention
       created_at: this.getCurrentTimestamp(),
-      tags: [],
+      tags: [
+        ['expiration', this.getExpirationTimestamp(
+          this.calculateExpirationTimeFromNow(expirationDate)
+        )]
+      ],
       shipping: []
     };
 
@@ -76,37 +84,35 @@ export class NostrEventFactory {
     return Promise.resolve({ sig, ...unsignedEvent } as object as Event);
   }
 
+  private calculateExpirationTimeFromNow(
+    expirationDate: moment.Moment
+  ): number {
+    const now = moment();
+    const differenceInMilliseconds = expirationDate.diff(now);
+    return differenceInMilliseconds;
+  }
+
   /**
    * NIP 90
    * https://github.com/nostr-protocol/nips/blob/master/90.md
    */
-  async createBidEvent(you: Required<NostrUser>) {
-
-  }
-
-  /**
-   * NIP 4
-   * https://github.com/nostr-protocol/nips/blob/master/04.md
-   * https://github.com/nbd-wtf/nostr-tools/blob/master/nip04.test.ts
-   */
-  async createEncryptedDirectMessage(you: Required<NostrUser>, stranger: NostrUser, message: string): Promise<Event<NostrEventKind.EncryptedDirectMessage>> {
-    // TODO: validated encriptedMessage to check if it carry the iv parameter
-    const encriptedMessage = await nip04.encrypt(you.nostrSecret, stranger.nostrPublic, message);
-
-    const unsignedEvent: UnsignedEvent = {
-      kind: NostrEventKind.EncryptedDirectMessage,
-      content: encriptedMessage,
+  async createBidEvent(you: Required<NostrUser>, bid: IAuctionBid) {
+    const unsignedEvent = {
+      id: '',
+      kind: NostrEventKind.Text,
+      content: bid.comment,
       pubkey: you.publicKeyHex,
       // eslint-disable-next-line @typescript-eslint/naming-convention
       created_at: this.getCurrentTimestamp(),
       tags: [
-        ['p', stranger.publicKeyHex]
+        ['e', bid.idProduto],
+        ['bid', bid.amount]
       ]
     };
 
-    const id = getEventHash(unsignedEvent);
-    const sig = getSignature(unsignedEvent, you.privateKeyHex);
+    unsignedEvent.id = getEventHash(unsignedEvent as object as Event);
+    const sig = getSignature(unsignedEvent as object as Event, you.privateKeyHex);
 
-    return Promise.resolve({ id, sig, ...unsignedEvent });
+    return Promise.resolve({ sig, ...unsignedEvent } as object as Event);
   }
 }
