@@ -1,0 +1,32 @@
+<!-- TODO: Responsiveness, pagination -->
+<div class="container">
+  <ul>
+    <li *ngFor="let item of auctions; trackBy: trackByFn">
+      <!-- Maybe it should be a component -->
+      <div class="product-card">
+        <div class="product-card__img">
+          <img [src]="item.image" alt="{{item.name}} image">
+        </div>
+
+        <div class="product-card__details">
+          <h2 class="product-card__details__title">{{item.name}}</h2>
+
+          <p class="product-card__details__description" [title]="item.description">{{item.description}}</p>
+
+          <div>
+            <div class="product-card__details__bid">
+              <h3>Ș {{item.highestBid}}</h3>
+              <span>{{item.bidderName}}</span>
+            </div>
+            <hr>
+            <div class="product-card__details__expiration-date">
+              <span>Expires in {{item.expirationDate | timeLeft | async}}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </li>
+  </ul>
+
+</div>
