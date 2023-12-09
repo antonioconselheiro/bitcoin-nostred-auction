@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Auction } from '@domain/auction-product/auction-product.model';
+import { Auction } from '@domain/auction/auction.model';
 
 @Component({
   selector: 'auc-products-list',
