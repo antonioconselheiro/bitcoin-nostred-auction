@@ -69,7 +69,7 @@ export class TimeLeftPipe implements PipeTransform {
     const lastPeriod = existingPeriods[existingPeriods.length - 1];
 
     return existingPeriods.length > 1 ?
-      `${existingPeriods.slice(0, existingPeriods.length - 1).join(', ')} e ${lastPeriod}`
+      `${existingPeriods.slice(0, existingPeriods.length - 1).join(', ')} and ${lastPeriod}`
       : lastPeriod;
   }
 
