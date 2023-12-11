@@ -1,13 +1,5 @@
 version: '3.9'
 
-volumes:
-  node_modules_vol:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./node_modules
-
 services:
   bitcoin-nostred-auction-dev:
     image: bitcoin-nostred-auction-dev
@@ -22,5 +14,4 @@ services:
     volumes:
       - ..:/bitcoin-nostred-auction:cached
       - /var/run/docker.sock:/var/run/docker.sock
-      - node_modules_vol:/bitcoin-nostred-auction/node_modules
     tty: true
