@@ -12,7 +12,7 @@ export class ProfileConverter {
 
   constructor(
     private htmlfy: HtmlfyService
-  ) {}
+  ) { }
 
   castPubkeyToNostrPublic(pubkey: string): string {
     return nip19.npubEncode(pubkey);
