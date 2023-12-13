@@ -4,11 +4,11 @@ import { ModalableDirective } from '@shared/modal/modalable.directive';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'auc-auth-modal',
-  templateUrl: './auth-modal.component.html',
-  styleUrls: ['./auth-modal.component.scss']
+  selector: 'auc-modal-auth',
+  templateUrl: './modal-auth.component.html',
+  styleUrls: ['./modal-auth.component.scss']
 })
-export class AuthModalComponent extends ModalableDirective<void, boolean> {
+export class ModalAuthComponent extends ModalableDirective<void, boolean> {
 
   response = new Subject<boolean | void>();
 

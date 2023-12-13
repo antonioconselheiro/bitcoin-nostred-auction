@@ -76,7 +76,7 @@ export class ProfileProxy {
   
   private async forceProfileReload(npubs: Array<TNostrPublic>): Promise<Array<IProfile>> {
     const events = await this.profileApi.loadProfiles(npubs);
-    this.profileCache.cache(events);
+    this.profileCache.cache(events as Event<NostrEventKind>[]);
     return Promise.resolve(npubs.map(npub => this.profileCache.get(npub)));
   }
 }

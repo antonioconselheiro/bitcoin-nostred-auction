@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NsecManagerModalComponent } from './nsec-manager-modal.component';
+import { ModalNsecManagerComponent } from './modal-nsec-manager.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    NsecManagerModalComponent
+    ModalNsecManagerComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule
   ]
 })
-export class NsecManagerModalModule { }
+export class ModalNsecManagerModule { }

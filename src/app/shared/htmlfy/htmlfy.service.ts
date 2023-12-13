@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { TNostrPublic } from '@domain/nostr-public.type';
-import { ProfileCache } from '@shared/profile-service/profile.cache';
+import { ProfileCache } from '@shared/profile/profile.cache';
 import { UrlUtil } from '@shared/util/url.service';
 
 @Injectable()

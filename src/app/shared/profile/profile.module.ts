@@ -20,4 +20,4 @@ import { ProfileEncrypt } from './profile.encrypt';
     AuthenticatedProfileObservable
   ]
 })
-export class ProfileServiceModule { }
+export class ProfileModule { }

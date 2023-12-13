@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthModalComponent } from '@shared/auth-modal/auth-modal.component';
 import { ModalService } from '@shared/modal/modal.service';
-import { NsecManagerModalComponent } from '@shared/nsec-manager-modal/nsec-manager-modal.component';
 import { firstValueFrom } from 'rxjs';
+import { ModalAuthComponent } from '@shared/modal-auth/modal-auth.component';
+import { ModalNsecManagerComponent } from '@shared/modal-nsec-manager/modal-nsec-manager.component';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +21,7 @@ export class AppComponent {
 
   addNostrAccount(): void {
     firstValueFrom(this.modalService
-      .createModal(AuthModalComponent)
+      .createModal(ModalAuthComponent)
       .setTitle('Select an authentication method')
       .build())
       .then(writeNSec => {
@@ -33,7 +33,7 @@ export class AppComponent {
 
   private openNostrSecretManager(): void {
     firstValueFrom(this.modalService
-      .createModal(NsecManagerModalComponent)
+      .createModal(ModalNsecManagerComponent)
       .setTitle('Login')
       .build());
   }
