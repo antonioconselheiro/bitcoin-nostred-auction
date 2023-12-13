@@ -10,7 +10,9 @@ import { Subject } from 'rxjs';
   styleUrls: ['./nsec-manager-modal.component.scss']
 })
 export class NsecManagerModalComponent extends ModalableDirective<void, void> {
-
+  showNsec = false;
+  showPin = false;
+  show = false;
   response = new Subject<void>();
 
   accountForm = this.fb.group({
@@ -32,5 +34,13 @@ export class NsecManagerModalComponent extends ModalableDirective<void, void> {
 
   onSubmit(): void {
 
+  }
+
+  toggleShowNsec(): void {
+    this.showNsec = !this.showNsec;
+  }
+
+  toggleShowPin(): void {
+    this.showPin = !this.showPin;
   }
 }
