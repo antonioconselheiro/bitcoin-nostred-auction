@@ -28,7 +28,7 @@ export class AppComponent {
         if (writeNSec) {
           this.openNostrSecretManager();
         }
-      });
+      }).catch(e => console.error(e));
   }
 
   private openNostrSecretManager(): void {
