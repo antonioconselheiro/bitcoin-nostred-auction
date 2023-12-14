@@ -4,12 +4,9 @@ import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-u
 import { IProfile } from '@domain/profile.interface';
 import * as CryptoJS from 'crypto-js';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProfileEncrypt {
 
-  private readonly initializationVector = CryptoJS.enc.Hex.parse('be410fea41df7162a679875ec131cf2c');
   private readonly mode = CryptoJS.mode.CBC;
   private readonly padding = CryptoJS.pad.Pkcs7;
 
@@ -22,8 +19,12 @@ export class ProfileEncrypt {
       return null;
     }
 
+    const initializationVector = CryptoJS.enc.Hex.parse(
+      CryptoJS.lib.WordArray.random(128/8).toString()
+    );
+
     const nsecEncrypted = CryptoJS.AES.encrypt(nostrSecret, String(pin), {
-      iv: this.initializationVector,
+      iv: initializationVector,
       mode: this.mode,
       padding: this.padding
     });
@@ -34,13 +35,14 @@ export class ProfileEncrypt {
       npub: profile.user.nostrPublic,
       nip05: profile.nip05,
       nip05valid: profile.nip05valid,
-      nsecEncrypted: String(nsecEncrypted)
+      nsecEncrypted: String(nsecEncrypted),
+      iv: String(initializationVector)
     };
   }
 
   decryptAccount(account: IUnauthenticatedUser, pin: string): NostrUser {
     const decrypted = CryptoJS.AES.decrypt(account.nsecEncrypted, pin, {
-      iv: this.initializationVector,
+      iv: CryptoJS.enc.Hex.parse(account.iv),
       mode: this.mode,
       padding: this.padding
     });

@@ -48,7 +48,7 @@ export class QrcodeReadComponent {
 
   private triggerResult(result: string): void {
     if (/^nsec/.test(result)) {
-
+      
     } else if (/^encrypted:aes/.test(result)) {
 
     } else {

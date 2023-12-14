@@ -10,9 +10,11 @@ import { Subject } from 'rxjs';
   styleUrls: ['./modal-nsec-manager.component.scss']
 })
 export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
+
   showNsec = false;
   showPin = false;
   show = false;
+
   response = new Subject<void>();
 
   accountForm = this.fb.group({
@@ -32,7 +34,11 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
     super();
   }
 
-  onSubmit(): void {
+  login(encriptedNostrSecret: string, pin: string): void {
+
+  }
+
+  addAccountLogin(encriptedNostrSecret: string, pin: string): void {
 
   }
 

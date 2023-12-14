@@ -3,6 +3,7 @@ import { IProfile } from '@domain/profile.interface';
 import { ProfileEncrypt } from '@shared/profile/profile.encrypt';
 import { BehaviorSubject } from 'rxjs';
 import { IUnauthenticatedUser } from './unauthenticated-user';
+import { NostrUser } from '@domain/nostr-user';
 
 @Injectable()
 export class NostrSecretStatefull {

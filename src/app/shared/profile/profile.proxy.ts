@@ -7,6 +7,8 @@ import { Event } from 'nostr-tools';
 import { NostrEventKind } from "@domain/nostr-event-kind.enum";
 import { DataLoadType } from "@domain/data-load.type";
 import { TNostrPublic } from "@domain/nostr-public.type";
+import { NostrUser } from "@domain/nostr-user";
+import { NostrSecretStatefull } from "@shared/security-service/nostr-secret.statefull";
 
 /**
  * Orchestrate the interaction with the profile data,
@@ -23,6 +25,7 @@ import { TNostrPublic } from "@domain/nostr-public.type";
 export class ProfileProxy {
 
   constructor(
+    private nostrSecretStatefull: NostrSecretStatefull,
     private profileApi: ProfileApi,
     private profileCache: ProfileCache,
     private profileConverter: ProfileConverter
@@ -59,6 +62,15 @@ export class ProfileProxy {
 
   loadFromPubKey(pubkey: string): Promise<IProfile> {
     return this.loadProfile(this.profileConverter.castPubkeyToNostrPublic(pubkey));
+  }
+
+  async loadAccount(nsec: string, pin: string): Promise<void> {
+    const user = new NostrUser(nsec);
+    const profile = await this.load(user.nostrPublic);
+    profile.user = user;
+    this.nostrSecretStatefull.addAccount(profile, pin);
+
+    return Promise.resolve();
   }
 
   async loadProfiles(...npubss: TNostrPublic[][]): Promise<IProfile[]> {

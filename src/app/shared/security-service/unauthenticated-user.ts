@@ -5,4 +5,5 @@ export interface IUnauthenticatedUser {
   picture: string;
   nip05?: string;
   nip05valid?: boolean;
+  iv: string;
 }

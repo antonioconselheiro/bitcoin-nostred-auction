@@ -1,4 +1,4 @@
-<form [formGroup]="accountForm" (submit)="onSubmit()" novalidate autocomplete="off">
+<form [formGroup]="accountForm" novalidate autocomplete="off">
   <div>
     <div class="floating-label">
       <input
@@ -42,6 +42,6 @@
   </div>
 </form>
 
-<button class="btn" type="button">Login</button>
-<button class="btn" type="button">Add account & Login</button>
+<button (click)="login(authModalNsecField.value, authModalPinField.value)" class="btn btn-primary" type="button">Login</button>
+<button (click)="addAccountLogin(authModalNsecField.value, authModalPinField.value)" class="btn" type="button">Add account & Login</button>
 
