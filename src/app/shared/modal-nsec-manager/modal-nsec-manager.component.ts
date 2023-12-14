@@ -2,17 +2,20 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomValidator } from '@shared/custom-validator/custom-validator';
 import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { ProfileProxy } from '@shared/profile/profile.proxy';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'auc-nsec-manager-modal',
-  templateUrl: './nsec-manager-modal.component.html',
-  styleUrls: ['./nsec-manager-modal.component.scss']
+  selector: 'auc-modal-nsec-manager',
+  templateUrl: './modal-nsec-manager.component.html',
+  styleUrls: ['./modal-nsec-manager.component.scss']
 })
-export class NsecManagerModalComponent extends ModalableDirective<void, void> {
+export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
+
   showNsec = false;
   showPin = false;
   show = false;
+
   response = new Subject<void>();
 
   accountForm = this.fb.group({
@@ -27,13 +30,18 @@ export class NsecManagerModalComponent extends ModalableDirective<void, void> {
   });
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private profileProxy: ProfileProxy
   ) {
     super();
   }
 
-  onSubmit(): void {
+  login(nostrSecret: string, pin: string): void {
+    this.profileProxy.loadAccount(nostrSecret, pin);
+  }
 
+  addAccountLogin(nostrSecret: string, pin: string): void {
+    this.profileProxy.loadAccount(nostrSecret, pin);
   }
 
   toggleShowNsec(): void {

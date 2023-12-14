@@ -2,9 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
-import { AuthModalModule } from '@shared/auth-modal/auth-modal.module';
 import { ModalModule } from '@shared/modal/modal.module';
-import { NsecManagerModalModule } from '@shared/nsec-manager-modal/nsec-manager-modal.module';
+import { CryptModule } from '@shared/crypt/crypt.module';
+import { UtilModule } from '@shared/util/util.module';
+import { ProfileModule } from '@shared/profile/profile.module';
+import { ModalChooseCamModule } from '@shared/modal-choose-cam/modal-choose-cam.module';
+import { ModalNsecManagerModule } from '@shared/modal-nsec-manager/modal-nsec-manager.module';
+import { ModalAccountManagerModule } from '@shared/modal-account-manager/modal-account-manager.module';
+import { ModalPinManagerModule } from '@shared/modal-pin-manager/modal-pin-manager.module';
 
 @NgModule({
   declarations: [
@@ -13,9 +18,14 @@ import { NsecManagerModalModule } from '@shared/nsec-manager-modal/nsec-manager-
   imports: [
     BrowserModule,
     ModalModule,
-    AuthModalModule,
-    NsecManagerModalModule,
-    AppRouting
+    CryptModule,
+    ProfileModule,
+    UtilModule,
+    AppRouting,
+    ModalAccountManagerModule,
+    ModalChooseCamModule,
+    ModalNsecManagerModule,
+    ModalPinManagerModule
   ],
   bootstrap: [
     AppComponent

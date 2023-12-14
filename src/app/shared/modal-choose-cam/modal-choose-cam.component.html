@@ -1,0 +1,8 @@
+<nav>
+  <ul>
+    <li *ngFor="let camera of cameras" (click)="onChooseCamera(camera)">
+      <strong *ngIf="camera.label">{{camera.label}}</strong>
+      <em>({{camera.id}})</em>
+    </li>
+  </ul>
+</nav>

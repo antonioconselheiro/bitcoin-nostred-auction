@@ -1,0 +1,26 @@
+<form [formGroup]="pinForm" (ngSubmit)="onSubmitPin()" novalidate autocomplete="off">
+  <div>
+    <div class="floating-label">
+      <input
+        required
+        id="authModalPinField"
+        #authModalPinField
+        [class.has-value]="authModalPinField.value"
+        [type]="showPin ? 'text' : 'password'"
+        name="pin"
+        maxlength="64"
+        formControlName="pin"
+      />
+      <label for="authModalPinField">PIN</label>
+
+      <button type="button" class="bordered svg-button" [ngClass]="showPin ? 'icon-show' : 'icon-hide'" (click)="toggleShowPin()">
+        <div class="svg-wrapper">
+          <div role="img"></div>
+        </div>
+      </button>
+    </div>
+  </div>
+</form>
+
+<button type="submit" form="authModalPinField" class="btn btn-primary" type="button">Login</button>
+

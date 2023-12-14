@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthModalComponent } from './auth-modal.component';
+import { ModalAccountManagerComponent } from './modal-account-manager.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    AuthModalComponent
+    ModalAccountManagerComponent
   ],
   imports: [
     CommonModule,
     RouterModule
   ]
 })
-export class AuthModalModule { }
+export class ModalAccountManagerModule { }
