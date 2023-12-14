@@ -10,6 +10,9 @@ import { ModalChooseCamModule } from '@shared/modal-choose-cam/modal-choose-cam.
 import { ModalNsecManagerModule } from '@shared/modal-nsec-manager/modal-nsec-manager.module';
 import { ModalAccountManagerModule } from '@shared/modal-account-manager/modal-account-manager.module';
 import { ModalPinManagerModule } from '@shared/modal-pin-manager/modal-pin-manager.module';
+import { SecurityServiceModule } from '@shared/security-service/security-service.module';
+import { NostrApiModule } from '@shared/nostr-api/nostr-api.module';
+import { HtmlfyServiceModule } from '@shared/htmlfy/htmlfy-service.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { ModalPinManagerModule } from '@shared/modal-pin-manager/modal-pin-manag
     ProfileModule,
     UtilModule,
     AppRouting,
+    NostrApiModule,
+    HtmlfyServiceModule,
+    SecurityServiceModule,
     ModalAccountManagerModule,
     ModalChooseCamModule,
     ModalNsecManagerModule,
