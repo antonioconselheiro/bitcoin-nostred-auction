@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
+import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
 import { ModalService } from '@shared/modal/modal.service';
 import QrScanner from 'qr-scanner';
 import { firstValueFrom } from 'rxjs';
@@ -17,7 +18,8 @@ export class QrcodeReadComponent {
   scanning?: QrScanner;
 
   constructor(
-    private modalService: ModalService
+    private modalService: ModalService,
+    private router: Router
   ) { }
 
   ngAfterViewInit(): void {
@@ -46,15 +48,32 @@ export class QrcodeReadComponent {
     return Promise.resolve();
   }
 
-  private triggerResult(result: string): void {
+  private async triggerResult(result: string): Promise<void> {
     if (/^nsec/.test(result)) {
-      
-    } else if (/^encrypted:aes/.test(result)) {
+      const pin = await firstValueFrom(this.modalService
+        .createModal(ModalPinManagerComponent)
+        .setTitle('Create a pin')
+        .setBindToRoute(this.router)
+        .build());
 
+//  encriptar
+//  logar sem salvar conta se não vier pin
+
+    } else if (/^encrypted:aes/.test(result)) {
+      const pin = await firstValueFrom(this.modalService
+        .createModal(ModalPinManagerComponent)
+        .setTitle('Open pin')
+        .setBindToRoute(this.router)
+        .build());
+
+        //  se o pin for invalido para abrir o encriptado, então 
+        //  um erro deve ser exibido e esta função deve ser chamada
+        //  recursivamente dando a oportunidade de escrever o pin
+        //  novamente
     } else {
-      this.modalService.alertError(
+      return firstValueFrom(this.modalService.alertError(
         'There is no authentication content into this qrcode, content read: ' + result
-      );
+      ));
     }
   }
 

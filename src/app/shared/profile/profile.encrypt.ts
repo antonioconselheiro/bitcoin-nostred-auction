@@ -13,7 +13,7 @@ export class ProfileEncrypt {
   encryptAccount(profile: IProfile, pin?: string): IUnauthenticatedUser | null {
     const nostrSecret = profile.user.nostrSecret;
     const displayName = profile.display_name || profile.name;
-    const picture = profile.picture || '/assets/profile/default-profile.jpg';
+    const picture = profile.picture || ''; // TODO: fixar uma imagem padrão
 
     if (!nostrSecret || !displayName) {
       return null;

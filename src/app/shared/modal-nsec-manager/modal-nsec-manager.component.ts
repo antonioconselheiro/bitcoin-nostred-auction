@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomValidator } from '@shared/custom-validator/custom-validator';
 import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { ProfileProxy } from '@shared/profile/profile.proxy';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -29,17 +30,18 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
   });
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private profileProxy: ProfileProxy
   ) {
     super();
   }
 
-  login(encriptedNostrSecret: string, pin: string): void {
-
+  login(nostrSecret: string, pin: string): void {
+    this.profileProxy.loadAccount(nostrSecret, pin);
   }
 
-  addAccountLogin(encriptedNostrSecret: string, pin: string): void {
-
+  addAccountLogin(nostrSecret: string, pin: string): void {
+    this.profileProxy.loadAccount(nostrSecret, pin);
   }
 
   toggleShowNsec(): void {
