@@ -12,9 +12,7 @@ import { ProfileProxy } from './profile.proxy';
  * Them main observable of this class emit the authenticated
  * profile metadata
  */
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | null> {
 
   static instance: AuthenticatedProfileObservable | null = null;

@@ -9,6 +9,7 @@ import { DataLoadType } from "@domain/data-load.type";
 import { TNostrPublic } from "@domain/nostr-public.type";
 import { NostrUser } from "@domain/nostr-user";
 import { NostrSecretStatefull } from "@shared/security-service/nostr-secret.statefull";
+import { IUnauthenticatedUser } from "@shared/security-service/unauthenticated-user";
 
 /**
  * Orchestrate the interaction with the profile data,
@@ -64,13 +65,13 @@ export class ProfileProxy {
     return this.loadProfile(this.profileConverter.castPubkeyToNostrPublic(pubkey));
   }
 
-  async loadAccount(nsec: string, pin: string): Promise<void> {
+  async loadAccount(nsec: string, pin: string): Promise<IUnauthenticatedUser & { nsecEncrypted: string } | null> {
     const user = new NostrUser(nsec);
     const profile = await this.load(user.nostrPublic);
     profile.user = user;
-    this.nostrSecretStatefull.addAccount(profile, pin);
+    const account = this.nostrSecretStatefull.createAccount(profile, pin);
 
-    return Promise.resolve();
+    return Promise.resolve(account);
   }
 
   async loadProfiles(...npubss: TNostrPublic[][]): Promise<IProfile[]> {

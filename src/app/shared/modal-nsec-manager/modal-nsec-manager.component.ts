@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomValidator } from '@shared/custom-validator/custom-validator';
 import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { AuthenticatedProfileObservable } from '@shared/profile/authenticated-profile.observable';
 import { ProfileProxy } from '@shared/profile/profile.proxy';
+import { NostrSecretStatefull } from '@shared/security-service/nostr-secret.statefull';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -31,17 +33,26 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
 
   constructor(
     private fb: FormBuilder,
+    private authenticatedProfile$: AuthenticatedProfileObservable,
+    private nostrSecretStatefull: NostrSecretStatefull,
     private profileProxy: ProfileProxy
   ) {
     super();
   }
 
-  login(nostrSecret: string, pin: string): void {
-    this.profileProxy.loadAccount(nostrSecret, pin);
-  }
+  async login(nostrSecret: string, pin: string, saveAccount = false): Promise<void> {
+    const account = await this.profileProxy
+      .loadAccount(nostrSecret, pin);
 
-  addAccountLogin(nostrSecret: string, pin: string): void {
-    this.profileProxy.loadAccount(nostrSecret, pin);
+    if (account) {
+      if (saveAccount) {
+        this.nostrSecretStatefull.addAccount(account);
+      }
+      await this.authenticatedProfile$.authenticateAccount(account, pin);
+    }
+
+    this.close();
+    return Promise.resolve();
   }
 
   toggleShowNsec(): void {

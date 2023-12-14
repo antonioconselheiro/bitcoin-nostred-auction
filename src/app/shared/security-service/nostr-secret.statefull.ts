@@ -27,14 +27,17 @@ export class NostrSecretStatefull {
   accounts$ = this.accountsSubject.asObservable();
 
   // eslint-disable-next-line complexity
-  addAccount(profile: IProfile, pin: string): IUnauthenticatedUser | null {
+  createAccount(profile: IProfile, pin: string): IUnauthenticatedUser & { nsecEncrypted: string } | null {
     const unauthenticated = this.profileEncrypt.encryptAccount(profile, pin);
     if (!unauthenticated) {
       return null;
     }
+    return unauthenticated;
+  }
+  
+  addAccount(unauthenticated: IUnauthenticatedUser): void {
     this.accounts[unauthenticated.npub] = unauthenticated
     this.update();
-    return unauthenticated;
   }
 
   removeAccount(profile: IUnauthenticatedUser): void {
