@@ -39,7 +39,7 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
     return this.getValue();
   }
 
-  authenticateAccount(account: IUnauthenticatedUser, pin: string): Promise<IProfile> {
+  authenticateAccount(account: IUnauthenticatedUser & { nsecEncrypted: string }, pin: string): Promise<IProfile> {
     const user = this.profileEncrypt.decryptAccount(account, pin);
 
     return this.profileProxy

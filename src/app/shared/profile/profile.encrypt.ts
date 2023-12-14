@@ -23,24 +23,29 @@ export class ProfileEncrypt {
       CryptoJS.lib.WordArray.random(128/8).toString()
     );
 
-    const nsecEncrypted = CryptoJS.AES.encrypt(nostrSecret, String(pin), {
-      iv: initializationVector,
-      mode: this.mode,
-      padding: this.padding
-    });
-
-    return {
+    const account: IUnauthenticatedUser = {
       picture,
       displayName,
       npub: profile.user.nostrPublic,
       nip05: profile.nip05,
       nip05valid: profile.nip05valid,
-      nsecEncrypted: String(nsecEncrypted),
       iv: String(initializationVector)
     };
+
+    if (pin) {
+      const nsecEncrypted = CryptoJS.AES.encrypt(nostrSecret, String(pin), {
+        iv: initializationVector,
+        mode: this.mode,
+        padding: this.padding
+      });
+
+      account.nsecEncrypted = String(nsecEncrypted);
+    }
+
+    return account;
   }
 
-  decryptAccount(account: IUnauthenticatedUser, pin: string): NostrUser {
+  decryptAccount(account: IUnauthenticatedUser & { nsecEncrypted: string }, pin: string): NostrUser {
     const decrypted = CryptoJS.AES.decrypt(account.nsecEncrypted, pin, {
       iv: CryptoJS.enc.Hex.parse(account.iv),
       mode: this.mode,

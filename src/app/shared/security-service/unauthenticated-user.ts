@@ -1,6 +1,6 @@
 export interface IUnauthenticatedUser {
   npub: string;
-  nsecEncrypted: string;
+  nsecEncrypted?: string;
   displayName: string;
   picture: string;
   nip05?: string;

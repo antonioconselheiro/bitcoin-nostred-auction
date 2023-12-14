@@ -9,6 +9,7 @@ import { ProfileModule } from '@shared/profile/profile.module';
 import { ModalChooseCamModule } from '@shared/modal-choose-cam/modal-choose-cam.module';
 import { ModalNsecManagerModule } from '@shared/modal-nsec-manager/modal-nsec-manager.module';
 import { ModalAccountManagerModule } from '@shared/modal-account-manager/modal-account-manager.module';
+import { ModalPinManagerModule } from '@shared/modal-pin-manager/modal-pin-manager.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ModalAccountManagerModule } from '@shared/modal-account-manager/modal-a
     AppRouting,
     ModalAccountManagerModule,
     ModalChooseCamModule,
-    ModalNsecManagerModule
+    ModalNsecManagerModule,
+    ModalPinManagerModule
   ],
   bootstrap: [
     AppComponent
