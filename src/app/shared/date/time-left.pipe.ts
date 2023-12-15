@@ -16,7 +16,7 @@ export class TimeLeftPipe implements PipeTransform {
   private readonly ONE_SECOND_MILI = 1000;
 
   transform(date: Date | string): Observable<string> {
-    return timer(0, 1000).pipe(map(() => this.getTimeleft(date)));
+    return timer(0, this.ONE_MINUTE_MILI).pipe(map(() => this.getTimeleft(date)));
   }
 
   private getTimeleft(date: Date | string): string {
@@ -34,9 +34,8 @@ export class TimeLeftPipe implements PipeTransform {
     const daysDescription = this.getDaysDescription(diffDays);
     const hoursDescription = this.getHoursDescription(diffHours);
     const minutesDescription = this.getMinutesDescription(diffMinutes);
-    const secondsDescription = this.getSecondsDescription(diffSeconds);
 
-    const existingPeriods = [yearsDescription, daysDescription, hoursDescription, minutesDescription, secondsDescription].filter(item => !!item);
+    const existingPeriods = [yearsDescription, daysDescription, hoursDescription, minutesDescription].filter(item => !!item);
 
     return this.getDescription(existingPeriods);
   }
