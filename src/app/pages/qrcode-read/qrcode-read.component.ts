@@ -78,12 +78,18 @@ export class QrcodeReadComponent {
   }
 
   private async chooseCam(cameras: Array<QrScanner.Camera>): Promise<QrScanner.Camera> {
-    if (cameras.length === 1) {
+    if (cameras.length === 0) {
+      await firstValueFrom(this.modalService
+        .alertError('No camera found'));
+
+      return Promise.reject(new Error('No camera found'));
+    } else if (cameras.length === 1) {
       return Promise.resolve(cameras[0]);
     }
 
     const choosen = await firstValueFrom(this.modalService
       .createModal(ModalChooseCamComponent)
+      .setData(cameras)
       .setTitle('Choose one camera')
       .build());
 
