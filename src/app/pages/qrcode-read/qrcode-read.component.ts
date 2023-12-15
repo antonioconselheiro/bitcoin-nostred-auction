@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
 import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
 import { ModalService } from '@shared/modal/modal.service';
+import { AuthenticatedProfileObservable } from '@shared/profile/authenticated-profile.observable';
+import { ProfileProxy } from '@shared/profile/profile.proxy';
 import QrScanner from 'qr-scanner';
 import { firstValueFrom } from 'rxjs';
 
@@ -12,13 +14,16 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./qrcode-read.component.scss']
 })
 export class QrcodeReadComponent {
+
   @ViewChild('video', { read: ElementRef })
   videoEl?: ElementRef<HTMLVideoElement>;
 
   scanning?: QrScanner;
 
   constructor(
+    private authenticatedProfile$: AuthenticatedProfileObservable,
     private modalService: ModalService,
+    private profileProxy: ProfileProxy,
     private router: Router
   ) { }
 
@@ -55,6 +60,10 @@ export class QrcodeReadComponent {
         .setTitle('Create a pin')
         .setBindToRoute(this.router)
         .build());
+
+      const account = await this.profileProxy
+        .loadAccount(result, pin);
+      this.authenticatedProfile$.authenticateAccount
 
 //  encriptar
 //  logar sem salvar conta se não vier pin

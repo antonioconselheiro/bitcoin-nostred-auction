@@ -10,9 +10,7 @@ export class ProfileEncrypt {
   private readonly mode = CryptoJS.mode.CBC;
   private readonly padding = CryptoJS.pad.Pkcs7;
 
-  encryptAccount(profile: IProfile, pin: string): IUnauthenticatedUser & { nsecEncrypted: string } | null;
-  encryptAccount(profile: IProfile, pin: undefined): IUnauthenticatedUser | null;
-  encryptAccount(profile: IProfile, pin?: string): IUnauthenticatedUser | null {
+  encryptAccount(profile: IProfile, pin?: string | void | undefined): IUnauthenticatedUser | IUnauthenticatedUser & { nsecEncrypted: string } | null {
     const nostrSecret = profile.user.nostrSecret;
     const displayName = profile.display_name || profile.name;
     const picture = profile.picture || ''; // TODO: fixar uma imagem padrão

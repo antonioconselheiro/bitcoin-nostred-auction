@@ -26,8 +26,7 @@ export class NostrSecretStatefull {
   private accountsSubject = new BehaviorSubject<IUnauthenticatedUser[]>(Object.values(this.accounts));
   accounts$ = this.accountsSubject.asObservable();
 
-  // eslint-disable-next-line complexity
-  createAccount(profile: IProfile, pin: string): IUnauthenticatedUser & { nsecEncrypted: string } | null {
+  createAccount(profile: IProfile, pin?: string | void): IUnauthenticatedUser | IUnauthenticatedUser & { nsecEncrypted: string } | null {
     const unauthenticated = this.profileEncrypt.encryptAccount(profile, pin);
     if (!unauthenticated) {
       return null;

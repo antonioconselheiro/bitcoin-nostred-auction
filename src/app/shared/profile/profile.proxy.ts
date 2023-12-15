@@ -65,7 +65,7 @@ export class ProfileProxy {
     return this.loadProfile(this.profileConverter.castPubkeyToNostrPublic(pubkey));
   }
 
-  async loadAccount(nsec: string, pin: string): Promise<IUnauthenticatedUser & { nsecEncrypted: string } | null> {
+  async loadAccount(nsec: string, pin?: string | void): Promise<IUnauthenticatedUser | IUnauthenticatedUser & { nsecEncrypted: string } | null> {
     const user = new NostrUser(nsec);
     const profile = await this.load(user.nostrPublic);
     profile.user = user;

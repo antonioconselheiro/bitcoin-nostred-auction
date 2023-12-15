@@ -5,6 +5,7 @@ import { ModalableDirective } from '@shared/modal/modalable.directive';
 import { AuthenticatedProfileObservable } from '@shared/profile/authenticated-profile.observable';
 import { ProfileProxy } from '@shared/profile/profile.proxy';
 import { NostrSecretStatefull } from '@shared/security-service/nostr-secret.statefull';
+import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -40,11 +41,15 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
     super();
   }
 
-  async login(nostrSecret: string, pin: string, saveAccount = false): Promise<void> {
+  async login(nostrSecret: string, pin: string, saveAccount = false): Promise<(IUnauthenticatedUser & {
+    nsecEncrypted: string;
+  }) | null> {
     const account = await this.profileProxy
-      .loadAccount(nostrSecret, pin);
+      .loadAccount(nostrSecret, pin) as IUnauthenticatedUser & {
+        nsecEncrypted: string;
+      };
 
-    if (account) {
+    if (this.isAccountNostrSecretEncrypted(account)) {
       if (saveAccount) {
         this.nostrSecretStatefull.addAccount(account);
       }
@@ -52,7 +57,13 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
     }
 
     this.close();
-    return Promise.resolve();
+    return Promise.resolve(account);
+  }
+
+  private isAccountNostrSecretEncrypted(
+    account: IUnauthenticatedUser | null
+  ): account is IUnauthenticatedUser & { nsecEncrypted: string; } {
+    return account && account.nsecEncrypted && true || false;
   }
 
   toggleShowNsec(): void {
