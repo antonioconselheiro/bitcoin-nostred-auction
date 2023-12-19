@@ -1,8 +1,10 @@
+@import 'settings';
+
 :host {
   display: flex;
   justify-content: center;
   align-items: var(--modalAlign);
-  background-color: var(--backgroundOverlap);
+  background-color: rgba(15, 23, 42, 0.3);
   position: fixed;
   top: 0;
   left: 0;
@@ -15,21 +17,24 @@
   margin: 0 auto;
   display: block;
   width: 600px;
-  background-color: #eee;
+  background-color: #FFFFFF;
   border-radius: var(--modalBorderRadius);
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 15px 20px -10px rgba(0, 0, 0, 0.1);
 
   header {
-    padding: .75rem;
+    padding: 25px 30px;
     display: flex;
-    align-items: center;
-
-    h1 {
-      margin-left: 1rem;
-    }
+    justify-content: space-between;
   }
 
   > div {
-    padding: 1rem;
+    border-top: 1px solid #E0E0E0;;
+    padding: 2.5em 2em;
+  }
+
+  @media(max-width: $max-mobile) {
+    // h1 {
+    //   font-size: ;
+    // }
   }
 }
