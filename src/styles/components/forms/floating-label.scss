@@ -3,10 +3,10 @@
 /// The placeholder turn into label when the field is focused or when it has value.
 /// You can include buttons inside the input.
 /// You can show form erros.
-/// 
+///
 /// @group Components
 /// @class floating-label
-/// 
+///
 /// @example
 /// ```
 /// <div class="floating-label">
@@ -18,7 +18,7 @@
 ///     formControlName="nsec"
 ///   />
 ///   <label for="authModalNsecField">Nostr Secret (nsec)</label>
-/// 
+///
 ///   <button type="button" class="bordered svg-button icon-show">
 ///     <div class="svg-wrapper">
 ///       <div role="img"></div>
@@ -38,13 +38,13 @@
 ///     formControlName="nsec"
 ///   />
 ///   <label for="authModalNsecField">Nostr Secret (nsec)</label>
-/// 
+///
 ///   <button type="button" class="bordered svg-button icon-show">
 ///     <div class="svg-wrapper">
 ///       <div role="img"></div>
 ///     </div>
 ///   </button>
-/// 
+///
 ///   <span class="error">Nostr Secret cannot be blank</span>
 /// </div>
 /// ```
@@ -57,9 +57,12 @@
   border: 1px solid #ccc;
   border-radius: 15px;
   height: 3.5rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1.75rem;
   padding-right: 20px;
+  margin-bottom: 1.75rem;
+
+  & + & {
+    margin-top: 1.5rem;
+  }
 
   &.error {
     border: 1px solid var(--error);
