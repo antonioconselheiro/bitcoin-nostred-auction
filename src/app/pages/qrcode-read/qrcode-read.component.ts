@@ -55,35 +55,53 @@ export class QrcodeReadComponent {
 
   private async triggerResult(result: string): Promise<void> {
     if (/^nsec/.test(result)) {
-      const pin = await firstValueFrom(this.modalService
-        .createModal(ModalPinManagerComponent)
-        .setTitle('Create a pin')
-        .setBindToRoute(this.router)
-        .build());
-
-      const account = await this.profileProxy
-        .loadAccount(result, pin);
-      this.authenticatedProfile$.authenticateAccount
-
-//  encriptar
-//  logar sem salvar conta se não vier pin
-
+      return this.triggerResultAsNostrSecret(result);
     } else if (/^encrypted:aes/.test(result)) {
-      const pin = await firstValueFrom(this.modalService
-        .createModal(ModalPinManagerComponent)
-        .setTitle('Open pin')
-        .setBindToRoute(this.router)
-        .build());
-
-        //  se o pin for invalido para abrir o encriptado, então 
-        //  um erro deve ser exibido e esta função deve ser chamada
-        //  recursivamente dando a oportunidade de escrever o pin
-        //  novamente
+      return this.triggerResultAsEncryptedEncodedNostrSecred(result);
     } else {
       return firstValueFrom(this.modalService.alertError(
         'There is no authentication content into this qrcode, content read: ' + result
       ));
     }
+  }
+
+  private async triggerResultAsNostrSecret(nsec: string): Promise<void> {
+    const pin = await firstValueFrom(this.modalService
+      .createModal(ModalPinManagerComponent)
+      .setTitle('Create a pin')
+      .setBindToRoute(this.router)
+      .build());
+
+      const account = await this.profileProxy
+        .loadAccount(nsec, pin);
+
+    if (
+      account &&
+      this.authenticatedProfile$.hasEncriptedNostrSecret(account) &&
+      pin
+    ) {
+      this.authenticatedProfile$.authenticateAccount(account, pin);
+    } else {
+      this.authenticatedProfile$.authenticateWithNostrSecret(nsec);
+    }
+  }
+
+  private async triggerResultAsEncryptedEncodedNostrSecred(
+    encryptedEncode: string
+  ): Promise<void> {
+    const key = await firstValueFrom(this.modalService
+      .createModal(ModalPinManagerComponent)
+      .setTitle('Open pin')
+      .setBindToRoute(this.router)
+      .build());
+
+    if (!key) {
+      return firstValueFrom(this.modalService.alertError('Invalid key'));
+    }
+
+    return this.authenticatedProfile$.authenticateEncryptedEncode(
+      encryptedEncode, key
+    ).then(() => Promise.resolve());
   }
 
   private async chooseCam(cameras: Array<QrScanner.Camera>): Promise<QrScanner.Camera> {

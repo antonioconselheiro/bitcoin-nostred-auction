@@ -4,6 +4,7 @@ import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-u
 import { BehaviorSubject } from 'rxjs';
 import { ProfileEncrypt } from './profile.encrypt';
 import { ProfileProxy } from './profile.proxy';
+import { NostrUser } from '@domain/nostr-user';
 
 /**
  * This class responsible for caching event information
@@ -37,9 +38,32 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
     return this.getValue();
   }
 
+  authenticateWithNostrSecret(nsec: string): Promise<IProfile> {
+    return this.autenticate(NostrUser.fromNostrSecret(nsec));
+  }
+
   authenticateAccount(account: IUnauthenticatedUser & { nsecEncrypted: string }, pin: string): Promise<IProfile> {
     const user = this.profileEncrypt.decryptAccount(account, pin);
+    return this.autenticate(user);
+  }
 
+  authenticateEncryptedEncode(encryptedQueryString: string, pin: string): Promise<IProfile> {
+    const { cypher, iv } = this.castEncryptedQueryStringToObject(encryptedQueryString);
+    const nsec = this.profileEncrypt.decryptAES(cypher, pin, iv);
+    return this.autenticate(NostrUser.fromNostrSecret(nsec));
+  }
+
+  private castEncryptedQueryStringToObject(encryptedQueryString: string): {
+    cypher: string;
+    iv: string;
+  } {
+    const cypher = encryptedQueryString.replace(/^encrypted:|\?.*$/g, '');
+    const iv = encryptedQueryString.replace(/^.*\?iv=/, '');
+
+    return { cypher, iv };
+  }
+
+  private autenticate(user: Required<NostrUser>): Promise<IProfile> {
     return this.profileProxy
       .load(user.nostrPublic)
       .then(profile => {
@@ -48,6 +72,16 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
         sessionStorage.setItem('ProfilesObservable_auth', JSON.stringify(authProfile));
         return Promise.resolve(authProfile);
       });
+  }
+
+  hasEncriptedNostrSecret(
+    account: IUnauthenticatedUser
+  ): account is IUnauthenticatedUser & { nsecEncrypted: string } {
+    if (account.nsecEncrypted) {
+      return true;
+    }
+
+    return false;
   }
 
   logout(): void {

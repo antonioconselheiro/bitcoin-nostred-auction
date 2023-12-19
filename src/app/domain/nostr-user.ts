@@ -49,6 +49,10 @@ export class NostrUser {
     return new NostrUser(nip19.npubEncode(pubkey));
   }
 
+  static fromNostrSecret(nsec: string): Required<NostrUser> {
+    return new NostrUser(nsec) as Required<NostrUser>;
+  }
+
   toString(): string {
     return this.publicKeyHex;
   }

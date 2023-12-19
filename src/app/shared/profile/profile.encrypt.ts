@@ -33,26 +33,36 @@ export class ProfileEncrypt {
     };
 
     if (pin) {
-      const nsecEncrypted = CryptoJS.AES.encrypt(nostrSecret, String(pin), {
-        iv: initializationVector,
-        mode: this.mode,
-        padding: this.padding
-      });
-
+      const nsecEncrypted = this.encryptAES(nostrSecret, pin, initializationVector);
       account.nsecEncrypted = String(nsecEncrypted);
     }
 
     return account;
   }
 
-  decryptAccount(account: IUnauthenticatedUser & { nsecEncrypted: string }, pin: string): NostrUser {
-    const decrypted = CryptoJS.AES.decrypt(account.nsecEncrypted, pin, {
-      iv: CryptoJS.enc.Hex.parse(account.iv),
+
+  encryptAES(nostrSecret: string, key: string, initializationVector: CryptoJS.lib.WordArray) {
+    return CryptoJS.AES.encrypt(nostrSecret, key, {
+      iv: initializationVector,
+      mode: this.mode,
+      padding: this.padding
+    });
+  }
+
+  decryptAES(cypher: string, key: string, iv: string) {
+    const decrypted = CryptoJS.AES.decrypt(cypher, key, {
+      iv: CryptoJS.enc.Hex.parse(iv),
       mode: this.mode,
       padding: this.padding
     });
 
-    const nsec = CryptoJS.enc.Utf8.stringify(decrypted);
-    return new NostrUser(nsec);
+    return CryptoJS.enc.Utf8.stringify(decrypted);
+  }
+
+  decryptAccount(
+    account: IUnauthenticatedUser & { nsecEncrypted: string }, pin: string
+  ): Required<NostrUser> {
+    const nsec = this.decryptAES(account.nsecEncrypted, pin, account.iv);
+    return NostrUser.fromNostrSecret(nsec);
   }
 }
