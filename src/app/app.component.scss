@@ -1,6 +1,6 @@
 header {
   background-color: black;
-  color: white;
+  color: #FFFFFF;
   padding: 1rem;
   text-align: center;
   font-family: monospace;
@@ -8,7 +8,9 @@ header {
 }
 
 .mainmenu {
-  margin-top: 1rem;
+  padding: 10px 0;
+  background-color: #FFFFFF;
+
   ul {
     list-style-type: none;
     padding: 0;
@@ -27,4 +29,16 @@ footer {
   padding: 1rem 0;
   border-top: 1px solid;
   background-color: #ddd;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.outlet-content {
+  padding-top: 94px;
+  padding-bottom: 65px;
 }
