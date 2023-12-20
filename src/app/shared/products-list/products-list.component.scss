@@ -1,4 +1,8 @@
+@import 'settings';
+
 .container {
+  display: flex;
+  justify-content: center;
   background-color: #edf2f7;
   padding: 20px;
 
@@ -7,20 +11,21 @@
     padding: 0;
 
     li + li {
-      margin-top: 10px;
+      margin-top: 15px;
     }
   }
 }
 
-.product-card {
+.card {
   display: flex;
   border-radius: 10px;
   max-width: 700px;
   box-shadow: 0 5px 21px rgba(0, 0, 0, 0.08);
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   height: 200px;
+  font-size: 16px;
 
-  &__img {
+  .card-img {
     width: 200px;
 
     img {
@@ -29,49 +34,13 @@
       height: 100%;
       border-radius: 10px 0 0 10px;
     }
-
   }
 
-  &__details {
+  .card-details {
     display: flex;
     flex-direction: column;
     flex: 1;
     padding: 20px;
-
-    &__title {
-      font-size: 24px;
-      font-weight: 400;
-    }
-
-    &__description {
-      font-size: 16px;
-      margin-top: 5px;
-      color: #646b6f;
-      line-height: 20px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-              line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    &__bid {
-      margin-top: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      h3 {
-        font-weight: bold;
-      }
-    }
-
-    &__expiration-date {
-      color: #a2a9ad;
-      align-self: flex-end;
-      font-style: italic;
-    }
 
     hr {
       border: 0;
@@ -86,4 +55,59 @@
       justify-content: flex-end;
     }
   }
+
+  .card-details-title {
+    font-size: 2em;
+    font-weight: 400;
+  }
+
+  .card-details-description {
+    font-size: 1em;
+    margin-top: 5px;
+    color: #646b6f;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .card-details-bid {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      font-weight: bold;
+    }
+  }
+
+  .card-details-expiration-date {
+    color: #a2a9ad;
+    align-self: flex-end;
+    font-style: italic;
+  }
+
+  @media(max-width: $max-mobile) {
+    flex-direction: column;
+    height: auto;
+    font-size: 14px;
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+
+      img {
+        border-radius: 10px 10px 0 0;
+      }
+    }
+
+    .card-details {
+      padding: 15px;
+    }
+  }
+
 }
