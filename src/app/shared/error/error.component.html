@@ -1,0 +1,13 @@
+<section *ngIf="error">
+  <div *ngFor="let mensagem of error?.messages; trackBy: trackByFn">
+    <p>
+      {{mensagem}}
+    </p>
+    <button
+      type="button"
+      (click)="closeError()"
+    >
+      <!-- svg -->
+    </button>
+  </div>
+</section>

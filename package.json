@@ -20,6 +20,7 @@
     "@angular/router": "^16.2.0",
     "@nostr-dev-kit/ndk": "^2.2.0",
     "crypto-js": "^4.2.0",
+    "ecma-error-normalizer": "^1.0.5",
     "moment": "^2.29.4",
     "nostr-tools": "^1.17.0",
     "qr-scanner": "^1.4.2",

@@ -58,7 +58,6 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
     cypher: string;
     iv: string;
   } {
-    // encrypted:aes?iv=5531709c4c3c43634dc45e85ad78147c;U2FsdGVkX18b2k1fZD1XJSVXe2jWqSVBP/E0wT1gxSwIhOE4MkQBzcaPzyibIm/GbI80bQ9tmshoTiDvlWCGQx6Fx+087eEDrieTtuwC6lM=
     const cypher = encryptedQueryString.replace(/^encrypted:.*;/, '');
     const iv = encryptedQueryString.replace(/^.*\?iv=|;.*$/, '');
 

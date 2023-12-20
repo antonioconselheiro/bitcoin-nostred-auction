@@ -13,6 +13,7 @@ import { ModalPinManagerModule } from '@shared/modal-pin-manager/modal-pin-manag
 import { SecurityServiceModule } from '@shared/security-service/security-service.module';
 import { NostrApiModule } from '@shared/nostr-api/nostr-api.module';
 import { HtmlfyServiceModule } from '@shared/htmlfy/htmlfy-service.module';
+import { ErrorModule } from '@shared/error/error.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HtmlfyServiceModule } from '@shared/htmlfy/htmlfy-service.module';
   imports: [
     BrowserModule,
     ModalModule,
+    ErrorModule,
     CryptModule,
     ProfileModule,
     UtilModule,
