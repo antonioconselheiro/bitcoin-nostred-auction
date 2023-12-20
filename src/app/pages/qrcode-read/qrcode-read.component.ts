@@ -43,7 +43,7 @@ export class QrcodeReadComponent {
 
   private async readQRCode(video: HTMLVideoElement): Promise<void> {
     const qrScanner = new QrScanner(
-      video, result => this.triggerResult(result.data), {}
+      video, result => this.triggerResult(result.data).then(() => history.back()), {}
     );
 
     const cameras = await QrScanner.listCameras();

@@ -50,6 +50,7 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
   authenticateEncryptedEncode(encryptedQueryString: string, pin: string): Promise<IProfile> {
     const { cypher, iv } = this.castEncryptedQueryStringToObject(encryptedQueryString);
     const nsec = this.profileEncrypt.decryptAES(cypher, pin, iv);
+
     return this.autenticate(NostrUser.fromNostrSecret(nsec));
   }
 
@@ -57,8 +58,9 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
     cypher: string;
     iv: string;
   } {
-    const cypher = encryptedQueryString.replace(/^encrypted:|\?.*$/g, '');
-    const iv = encryptedQueryString.replace(/^.*\?iv=/, '');
+    // encrypted:aes?iv=5531709c4c3c43634dc45e85ad78147c;U2FsdGVkX18b2k1fZD1XJSVXe2jWqSVBP/E0wT1gxSwIhOE4MkQBzcaPzyibIm/GbI80bQ9tmshoTiDvlWCGQx6Fx+087eEDrieTtuwC6lM=
+    const cypher = encryptedQueryString.replace(/^encrypted:.*;/, '');
+    const iv = encryptedQueryString.replace(/^.*\?iv=|;.*$/, '');
 
     return { cypher, iv };
   }
