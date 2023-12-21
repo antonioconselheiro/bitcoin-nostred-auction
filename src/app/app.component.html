@@ -1,22 +1,26 @@
-<header>Bitcoin Nostred Auction</header>
-<nav class="mainmenu">
-  <ul>
-    <li>
-      <a routerLink="/auctions-list">home</a>
-    </li>
-    <li>
-      <a routerLink="/my-auctions">my auctions</a>
-    </li>
-    <li>
-      <a routerLink="/my-bids">my bids</a>
-    </li>
-    <li>
-      <a routerLink="/network">network</a>
-    </li>
-  </ul>
-</nav>
+<div class="fixed-header">
+  <header>Bitcoin Nostred Auction</header>
+  <nav class="mainmenu">
+    <ul>
+      <li>
+        <a routerLink="/auctions-list">home</a>
+      </li>
+      <li>
+        <a routerLink="/my-auctions">my auctions</a>
+      </li>
+      <li>
+        <a routerLink="/my-bids">my bids</a>
+      </li>
+      <li>
+        <a routerLink="/network">network</a>
+      </li>
+    </ul>
+  </nav>
+</div>
 
-<router-outlet></router-outlet>
+<div class="outlet-content">
+  <router-outlet></router-outlet>
+</div>
 
 <footer>
   <button (click)="openNostrAccountManager()" class="btn btn-primary" type="button">Login</button>

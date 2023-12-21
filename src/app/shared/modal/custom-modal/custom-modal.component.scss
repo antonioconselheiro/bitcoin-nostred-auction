@@ -25,16 +25,25 @@
     padding: 25px 30px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   > div {
     border-top: 1px solid #E0E0E0;;
-    padding: 2.5em 2em;
+    padding: 40px 35px;
   }
 
   @media(max-width: $max-mobile) {
-    // h1 {
-    //   font-size: ;
-    // }
+    header {
+      padding: 20px 25px;
+    }
+
+    h1 {
+      font-size: 18px;
+    }
+
+    > div {
+      padding: 35px 25px;
+    }
   }
 }

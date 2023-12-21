@@ -6,8 +6,9 @@ import { Auction } from '@domain/auction/auction.model';
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss'],
 })
+// TODO: Does it make more sense to be a ActionsList?
 export class ProductsListComponent {
-  // MOCK DATA, this guy should be an input
+  // FIXME: MOCK DATA, this guy (or the a filter) should be an input
   auctions: Auction[] = [
     {
       id: '123',
@@ -28,6 +29,33 @@ export class ProductsListComponent {
       highestBid: 500,
       image: 'https://i.nostr.build/resp/360p/nb5112.png',
     },
+    {
+      id: '222',
+      name: 'Ir no podcast 3',
+      description: 'Quia dolor sit amet, consectetur, adipisci velit',
+      bidderName: 'Renato Crackiani',
+      expirationDate: new Date(2023, 11, 23, 13, 10, 10),
+      highestBid: 500,
+      image: 'https://i.nostr.build/resp/360p/nb5112.png',
+    },
+    {
+      id: '441',
+      name: 'Ir no podcast 3',
+      description: 'Quia dolor sit amet, consectetur, adipisci velit',
+      bidderName: 'Renato Crackiani',
+      expirationDate: new Date(2023, 11, 23, 13, 10, 10),
+      highestBid: 500,
+      image: 'https://i.nostr.build/resp/360p/nb5112.png',
+    },
+    {
+      id: '658',
+      name: 'Ir no podcast 3',
+      description: 'Quia dolor sit amet, consectetur, adipisci velit',
+      bidderName: 'Elrond',
+      expirationDate: new Date(2023, 11, 23, 13, 10, 10),
+      highestBid: 500,
+      image: 'https://i.nostr.build/resp/360p/nb5112.png',
+    }
   ];
 
   trackByFn(index: number, auction: Auction): string {
