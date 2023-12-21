@@ -42,12 +42,6 @@ export class ModalBuilder<EntryType, ReturnType> {
     return this;
   }
 
-  /**
-   * O tipo void sempre deve ser considerado como retorno, isso deve ocorrer por que
-   * quando o observable for convertido para promise ele vai fundir o next com o complete
-   * e quando não houver retorno de next, por conta de uma fechada forçada do modal, o promise
-   * receberá um void
-   */
   build(): Observable<ReturnType | void> {
     const response = new Subject<ReturnType>();
     const data = this.injectData as unknown;
@@ -55,7 +49,7 @@ export class ModalBuilder<EntryType, ReturnType> {
 
     if (this.router) {
 
-      //  FIXME: ver uma forma de ignorar alteração de rota para query params
+      //  FIXME: ignore query params for route change
       this.subscription.add(this.router.events
         .pipe(filter(nagivation => nagivation instanceof NavigationStart))
         .pipe(first())
@@ -70,8 +64,7 @@ export class ModalBuilder<EntryType, ReturnType> {
       }));
     } else {
       console.warn(
-        `Componente "${component.name}" servido como modal não foi associado a ` +
-        'rota e não será removido automaticamente caso a rota seja mudada'
+        `Component "${component.name}" used as modal with no route associated`
       );
     }
 

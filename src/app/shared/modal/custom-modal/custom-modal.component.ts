@@ -1,11 +1,12 @@
-import { Component, HostBinding, HostListener, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, HostListener, ViewChild, ViewContainerRef } from '@angular/core';
 import { ModalBuilder } from '../modal.builder';
 import { ModalDirective } from '../modal.directive';
 
 @Component({
   selector: 'auc-custom-modal',
   templateUrl: './custom-modal.component.html',
-  styleUrls: ['./custom-modal.component.scss']
+  styleUrls: ['./custom-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomModalComponent extends ModalDirective {
 

@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-len
-import { Directive, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Directive, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { IModalMetadata } from './modal-metadata.interface';
 import { ModalableDirective } from './modalable.directive';
@@ -38,9 +38,7 @@ export abstract class ModalDirective implements OnInit, OnDestroy, IOpenable, IC
     this.subscriptions.add(
       this.modalInject$.subscribe({
         next: modalMetaData => {
-          //  jogando processamento no próximo tick
-          // eslint-disable-next-line ban/ban
-          setTimeout(() =>{
+          setTimeout(() => {
             this.title = modalMetaData.title;
             this.open();
             this.openModal(modalMetaData);
@@ -65,14 +63,11 @@ export abstract class ModalDirective implements OnInit, OnDestroy, IOpenable, IC
   private openModal(modalMetaData: IModalMetadata<unknown, unknown>): void {
     const container = this.container;
     if (!container) {
-      console.error(
-        'Impossível criar modal: o atributo this.container está vazio, houve alguma ' +
-        'manutenção recente na parte de modais? #modalContainer mudou de nome?'
-      );
+      console.error('Impossible to create modal, could not found container do render');
       return;
     }
 
-    container.clear();  //  remove componentes antigos que não foram removidos corretamente
+    container.clear();
     const content = this.content = container.createComponent(modalMetaData.component).instance;
     this.classes = modalMetaData.cssClasses;
 
@@ -87,28 +82,24 @@ export abstract class ModalDirective implements OnInit, OnDestroy, IOpenable, IC
     }
 
     modalMetaData.response.subscribe({
-      error: this.closeModal.bind(this),
-      complete: this.closeModal.bind(this)
+      error: () => this.closeModal(),
+      complete: () => this.closeModal()
     });
   }
 
-  closeModal(error?: unknown): void {
+  closeModal(): void {
     const container = this.container;
     if (container) {
-      //  jogando processamento no próximo tick
       // eslint-disable-next-line ban/ban
       setTimeout(() => {
         container.clear();
         this.close();
         this.content?.response.complete();
       });
-    } else {
-      console.error('Impossível criar modal this.container, que contém o elemento da modal está vazio', error);
     }
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-
 }

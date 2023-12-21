@@ -8,15 +8,11 @@ import { ErrorConverter, IErrorNormalized } from 'ecma-error-normalizer';
 })
 export class ErrorComponent {
 
-  /**
-   * Interceptando o dado desconhecido para convertê-lo
-   * a uma estrutura normalizada
-   */
   @Input()
   set error(error: IErrorNormalized | null) {
-    const normalizedError = this.errorConverter.create(error);
+    this.interceptedError = this.errorConverter.create(error);
     if (error !== null) {
-      console.error(normalizedError);
+      console.error(this.interceptedError);
     }
   }
 

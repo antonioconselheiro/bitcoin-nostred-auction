@@ -8,6 +8,9 @@ import { ModalChooseCamComponent } from './modal-choose-cam.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    ModalChooseCamComponent
   ]
 })
 export class ModalChooseCamModule { }

@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
 import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
 import { ModalService } from '@shared/modal/modal.service';
@@ -13,27 +13,38 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './qrcode-read.component.html',
   styleUrls: ['./qrcode-read.component.scss']
 })
-export class QrcodeReadComponent {
+export class QrcodeReadComponent implements OnInit {
 
   @ViewChild('video', { read: ElementRef })
   videoEl?: ElementRef<HTMLVideoElement>;
 
   scanning?: QrScanner;
 
+  camActive = true;
+
   constructor(
     private authenticatedProfile$: AuthenticatedProfileObservable,
     private modalService: ModalService,
     private profileProxy: ProfileProxy,
-    private router: Router
+    private error$: MainErrorObservable
   ) { }
 
+  ngOnInit(): void {
+    this.camActive = true;
+  }
+
   ngAfterViewInit(): void {
-    if (this.videoEl && this.videoEl.nativeElement) {
+    if (this.camActive && this.videoEl && this.videoEl.nativeElement) {
       this.readQRCode(this.videoEl.nativeElement);
     }
   }
 
   ngOnDestroy(): void {
+    return this.stop();
+  }
+
+  private stop(): void {
+    this.camActive = false;
     if (this.videoEl && this.videoEl.nativeElement) {
       this.stopStreaming(this.videoEl.nativeElement);
     }
@@ -43,17 +54,22 @@ export class QrcodeReadComponent {
 
   private async readQRCode(video: HTMLVideoElement): Promise<void> {
     const qrScanner = new QrScanner(
-      video, result => this.triggerResult(result.data).then(() => history.back()), {}
+      video, result => this.triggerResult(result.data)
+        .then(() => history.back())
+        .catch(e => this.error$.next(e)), {}
     );
 
     const cameras = await QrScanner.listCameras();
     const camera = await this.chooseCam(cameras);
     await qrScanner.setCamera(camera.id);
     await qrScanner.start();
+
     return Promise.resolve();
   }
 
   private async triggerResult(result: string): Promise<void> {
+    this.stop();
+
     if (/^nsec/.test(result)) {
       return this.triggerResultAsNostrSecret(result);
     } else if (/^encrypted:aes/.test(result)) {
@@ -69,7 +85,6 @@ export class QrcodeReadComponent {
     const pin = await firstValueFrom(this.modalService
       .createModal(ModalPinManagerComponent)
       .setTitle('Create a pin')
-      .setBindToRoute(this.router)
       .build());
 
       const account = await this.profileProxy
@@ -92,7 +107,6 @@ export class QrcodeReadComponent {
     const key = await firstValueFrom(this.modalService
       .createModal(ModalPinManagerComponent)
       .setTitle('Open pin')
-      .setBindToRoute(this.router)
       .build());
 
     if (!key) {

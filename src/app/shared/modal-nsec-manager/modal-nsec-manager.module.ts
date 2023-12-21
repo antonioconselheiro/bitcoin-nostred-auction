@@ -10,6 +10,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    ModalNsecManagerComponent
   ]
 })
 export class ModalNsecManagerModule { }
