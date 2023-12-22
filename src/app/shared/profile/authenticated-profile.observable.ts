@@ -59,7 +59,7 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
     iv: string;
   } {
     const cypher = encryptedQueryString.replace(/^encrypted:.*;/, '');
-    const iv = encryptedQueryString.replace(/^.*\?iv=|;.*$/, '');
+    const iv = encryptedQueryString.replace(/^.*\?iv=|;.*$/g, '');
 
     return { cypher, iv };
   }
