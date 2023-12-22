@@ -4,7 +4,7 @@ import { NostrEventKind } from '@domain/nostr-event-kind.enum';
 import { NostrUser } from '@domain/nostr-user';
 import { IProduct } from '@domain/product.model';
 import moment from 'moment';
-import { Event, UnsignedEvent, getEventHash, getSignature } from 'nostr-tools';
+import { Event, EventTemplate, finalizeEvent } from 'nostr-tools';
 
 @Injectable()
 export class NostrEventFactory {
@@ -30,21 +30,20 @@ export class NostrEventFactory {
    */
   async createStallEvent(you: Required<NostrUser>, description: string): Promise<Event> {
     const unsignedEvent = {
-      id: '',
       kind: NostrEventKind.ProductsStall,
       description,
       currency: 'msat',
-      pubkey: you.publicKeyHex,
       // eslint-disable-next-line @typescript-eslint/naming-convention
       created_at: this.getCurrentTimestamp(),
       tags: [],
       shipping: []
     };
 
-    unsignedEvent.id = getEventHash(unsignedEvent as object as UnsignedEvent);
-    const sig = getSignature(unsignedEvent as object as UnsignedEvent, you.privateKeyHex);
+    const verifiedEvent = finalizeEvent(
+      unsignedEvent as object as EventTemplate, you.privateKeyHex
+    );
 
-    return Promise.resolve({ sig, ...unsignedEvent } as object as Event);
+    return Promise.resolve(verifiedEvent);
   }
 
   /**
@@ -57,7 +56,6 @@ export class NostrEventFactory {
     expirationDate: moment.Moment
   ): Promise<Event> {
     const unsignedEvent = {
-      id: '',
       stall_id: product.stall,
       kind: NostrEventKind.Product,
       name: product.name,
@@ -65,7 +63,6 @@ export class NostrEventFactory {
       images: product.images,
       currency: 'msat',
       price: product.price,
-      pubkey: you.publicKeyHex,
       specs: product.specs.map(spec => [ spec.name, spec.value ]),
       quantity: 1, // this is an auction software, not a marketplace
       // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -78,10 +75,33 @@ export class NostrEventFactory {
       shipping: []
     };
 
-    unsignedEvent.id = getEventHash(unsignedEvent as object as UnsignedEvent);
-    const sig = getSignature(unsignedEvent as object as UnsignedEvent, you.privateKeyHex);
+    const verifiedEvent = finalizeEvent(
+      unsignedEvent as object as EventTemplate, you.privateKeyHex
+    );
 
-    return Promise.resolve({ sig, ...unsignedEvent } as object as Event);
+    return Promise.resolve(verifiedEvent);
+  }
+
+  /**
+   * NIP 90
+   * https://github.com/nostr-protocol/nips/blob/master/90.md
+   */
+  async createBidEvent(you: Required<NostrUser>, bid: IAuctionBid) {
+    const unsignedEvent: EventTemplate = {
+      kind: NostrEventKind.Text,
+      content: bid.comment,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      created_at: this.getCurrentTimestamp(),
+      tags: [
+        ['e', bid.idProduto],
+        ['bid', String(bid.amount)]
+      ]
+    };
+
+    const verifiedEvent = finalizeEvent(
+      unsignedEvent, you.privateKeyHex
+    );
+    return Promise.resolve(verifiedEvent);
   }
 
   private calculateExpirationTimeFromNow(
@@ -90,29 +110,5 @@ export class NostrEventFactory {
     const now = moment();
     const differenceInMilliseconds = expirationDate.diff(now);
     return differenceInMilliseconds;
-  }
-
-  /**
-   * NIP 90
-   * https://github.com/nostr-protocol/nips/blob/master/90.md
-   */
-  async createBidEvent(you: Required<NostrUser>, bid: IAuctionBid) {
-    const unsignedEvent = {
-      id: '',
-      kind: NostrEventKind.Text,
-      content: bid.comment,
-      pubkey: you.publicKeyHex,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      created_at: this.getCurrentTimestamp(),
-      tags: [
-        ['e', bid.idProduto],
-        ['bid', bid.amount]
-      ]
-    };
-
-    unsignedEvent.id = getEventHash(unsignedEvent as object as Event);
-    const sig = getSignature(unsignedEvent as object as Event, you.privateKeyHex);
-
-    return Promise.resolve({ sig, ...unsignedEvent } as object as Event);
   }
 }

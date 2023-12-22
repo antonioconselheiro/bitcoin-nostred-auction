@@ -40,9 +40,9 @@ export class ProfileProxy {
   }
 
   cache(profiles: IProfile[]): void;
-  cache(profiles: Event<NostrEventKind>[]): void;
-  cache(profiles: IProfile[] | Event<NostrEventKind>[]): void;
-  cache(profiles: IProfile[] | Event<NostrEventKind>[]): void {
+  cache(profiles: Event[]): void;
+  cache(profiles: IProfile[] | Event[]): void;
+  cache(profiles: IProfile[] | Event[]): void {
     this.profileCache.cache(profiles);
   }
 
@@ -89,7 +89,7 @@ export class ProfileProxy {
   
   private async forceProfileReload(npubs: Array<TNostrPublic>): Promise<Array<IProfile>> {
     const events = await this.profileApi.loadProfiles(npubs);
-    this.profileCache.cache(events as Event<NostrEventKind>[]);
+    this.profileCache.cache(events);
     return Promise.resolve(npubs.map(npub => this.profileCache.get(npub)));
   }
 }

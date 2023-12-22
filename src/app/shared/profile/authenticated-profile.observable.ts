@@ -65,9 +65,11 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
   }
 
   private autenticate(user: Required<NostrUser>): Promise<IProfile> {
+    debugger;
     return this.profileProxy
       .load(user.nostrPublic)
       .then(profile => {
+        debugger;
         const authProfile = { ...profile, ...{ user } };
         this.next(authProfile);
         sessionStorage.setItem('ProfilesObservable_auth', JSON.stringify(authProfile));

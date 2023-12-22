@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { NostrEventKind } from "@domain/nostr-event-kind.enum";
 import { TNostrPublic } from "@domain/nostr-public.type";
 import { NostrUser } from "@domain/nostr-user";
-import { NDKEvent } from "@nostr-dev-kit/ndk";
 import { NostrService } from "@shared/nostr-api/nostr.service";
+import { Event } from 'nostr-tools';
 
 @Injectable()
 export class ProfileApi {
@@ -12,7 +12,7 @@ export class ProfileApi {
     private nostrService: NostrService
   ) { }
 
-  loadProfiles(npubs: Array<TNostrPublic>): Promise<NDKEvent[]> {
+  loadProfiles(npubs: Array<TNostrPublic>): Promise<Event[]> {
     return this.nostrService.request([
       {
         kinds: [
