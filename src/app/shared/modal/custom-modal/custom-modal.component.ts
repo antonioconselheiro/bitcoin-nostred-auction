@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostBinding, HostListener, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, HostBinding, HostListener, NgZone, ViewChild, ViewContainerRef } from '@angular/core';
 import { ModalBuilder } from '../modal.builder';
 import { ModalDirective } from '../modal.directive';
 
 @Component({
   selector: 'auc-custom-modal',
   templateUrl: './custom-modal.component.html',
-  styleUrls: ['./custom-modal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./custom-modal.component.scss']
 })
 export class CustomModalComponent extends ModalDirective {
 
@@ -19,14 +18,30 @@ export class CustomModalComponent extends ModalDirective {
   @HostBinding('style.display')
   display = 'none';
 
+  constructor(
+    private ngZone: NgZone
+  ) {
+    super();
+  }
+
   override open(): void {
-    super.open();
-    this.display = 'flex';
+    //  without ngzone this property will not be rendered
+    //  in html when it changes don't came triggered by
+    //  an user action, like when the video stream a qrcode
+    //  and this qrcode got decoded, in this context there
+    //  is no event triggering from browser or user, but
+    //  from the algorithm
+    this.ngZone.run(() => {
+      super.open();
+      this.display = 'flex';
+    });
   }
 
   override close(): void {
-    super.close();
-    this.display = 'none';  
+    this.ngZone.run(() => {
+      super.close();
+      this.display = 'none';  
+    });
   }
 
   @HostListener('document:keydown.escape')

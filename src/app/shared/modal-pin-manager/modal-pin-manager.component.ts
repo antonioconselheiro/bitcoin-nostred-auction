@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ModalableDirective } from '@shared/modal/modalable.directive';
 import { Subject } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
   templateUrl: './modal-pin-manager.component.html',
   styleUrls: ['./modal-pin-manager.component.scss']
 })
-export class ModalPinManagerComponent extends ModalableDirective<void, string> implements OnInit {
+export class ModalPinManagerComponent extends ModalableDirective<void, string> {
 
   showPin = false;
 
@@ -24,10 +24,6 @@ export class ModalPinManagerComponent extends ModalableDirective<void, string> i
     private fb: FormBuilder
   ) {
     super();
-  }
-
-  ngOnInit(): void {
-    debugger;
   }
 
   toggleShowPin(): void {
