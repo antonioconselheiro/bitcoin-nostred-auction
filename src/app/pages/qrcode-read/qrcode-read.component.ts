@@ -116,9 +116,16 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
       return firstValueFrom(this.modalService.alertError('Invalid key'));
     }
 
-    return this.authenticatedProfile$.authenticateEncryptedEncode(
-      encryptedEncode, key
-    ).then(() => Promise.resolve());
+    try {
+      await this.authenticatedProfile$.authenticateEncryptedEncode(
+        encryptedEncode, key
+      );
+      debugger;
+    } catch (e) {
+      debugger;
+
+    }
+    return Promise.resolve();
   }
 
   private async chooseCam(cameras: Array<QrScanner.Camera>): Promise<QrScanner.Camera> {
