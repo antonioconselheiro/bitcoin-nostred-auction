@@ -22,7 +22,7 @@ export class ProfileConverter {
     return { npub, user: new NostrUser(npub), load: DataLoadType.LAZY_LOADED };
   }
 
-  convertEventToProfile(profile: Event<NostrEventKind>, mergeWith?: IProfile ): IProfile {
+  convertEventToProfile(profile: Event, mergeWith?: IProfile ): IProfile {
     let metadata: IProfileMetadata;
     try {
       metadata = JSON.parse(profile.content);

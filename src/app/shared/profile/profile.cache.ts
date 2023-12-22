@@ -52,17 +52,17 @@ export class ProfileCache {
     return ProfileCache.profiles[npub] = this.profileConverter.getMetadataFromNostrPublic(npub);
   }
 
-  cache(profiles: Event<NostrEventKind>[]): void;
+  cache(profiles: Event[]): void;
   cache(profiles: IProfile[]): void;
-  cache(profiles: IProfile[] | Event<NostrEventKind>[]): void;
-  cache(profiles: IProfile[] | Event<NostrEventKind>[]): void {
-    const profileList = (profiles as (IProfile | Event<NostrEventKind>)[]);
+  cache(profiles: IProfile[] | Event[]): void;
+  cache(profiles: IProfile[] | Event[]): void {
+    const profileList = (profiles as (IProfile | Event)[]);
     profileList
       .filter((profile) => !('sig' in profile && profile.kind !== NostrEventKind.Metadata))
       .forEach(profile => this.cacheProfile(profile));
   }
 
-  private cacheProfile(profile: IProfile | Event<NostrEventKind>): IProfile {
+  private cacheProfile(profile: IProfile | Event): IProfile {
     if ('sig' in profile) {
       profile = this.profileConverter.convertEventToProfile(profile);
     }

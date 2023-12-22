@@ -15,7 +15,7 @@ export class NostrUser {
   /**
    * nsec decoded
    */
-  readonly privateKeyHex?: string;
+  readonly privateKeyHex?: Uint8Array;
 
   /**
    * npub decoded
@@ -31,7 +31,7 @@ export class NostrUser {
     const { type, data } = nip19.decode(nostrString);
     if (type === 'nsec') {
       this.nostrSecret = nostrString;
-      this.privateKeyHex = data.toString();
+      this.privateKeyHex = data;
       this.publicKeyHex = getPublicKey(this.privateKeyHex);
       this.nostrPublic = nip19.npubEncode(this.publicKeyHex);
     } else if (type === 'npub') {
