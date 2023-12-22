@@ -1,10 +1,10 @@
 // eslint-disable-next-line max-len
-import { ChangeDetectionStrategy, Directive, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { Directive, NgZone, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { ICloseable } from '@shared/util/closeable.interface';
+import { IOpenable } from '@shared/util/openable.interface';
 import { Observable, Subscription } from 'rxjs';
 import { IModalMetadata } from './modal-metadata.interface';
 import { ModalableDirective } from './modalable.directive';
-import { IOpenable } from '@shared/util/openable.interface';
-import { ICloseable } from '@shared/util/closeable.interface';
 
 @Directive()
 export abstract class ModalDirective implements OnInit, OnDestroy, IOpenable, ICloseable {
@@ -20,6 +20,7 @@ export abstract class ModalDirective implements OnInit, OnDestroy, IOpenable, IC
   private subscriptions = new Subscription();
 
   abstract container: ViewContainerRef | null;
+  protected abstract ngZone: NgZone;
 
   ngOnInit(): void {
     this.listenModalInjection();
@@ -38,11 +39,11 @@ export abstract class ModalDirective implements OnInit, OnDestroy, IOpenable, IC
     this.subscriptions.add(
       this.modalInject$.subscribe({
         next: modalMetaData => {
-          setTimeout(() => {
+          this.ngZone.run(() => {
             this.title = modalMetaData.title;
             this.open();
             this.openModal(modalMetaData);
-          })
+          });
         }
       }));
   }

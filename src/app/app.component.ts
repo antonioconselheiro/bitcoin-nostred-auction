@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalAccountManagerComponent } from '@shared/modal-account-manager/modal-account-manager.component';
 import { ModalNsecManagerComponent } from '@shared/modal-nsec-manager/modal-nsec-manager.component';
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   error: IErrorNormalized | null = null;
 
   constructor(
+    private router: Router,
     private modalService: ModalService,
     private error$: MainErrorObservable
   ) { }
@@ -38,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
     firstValueFrom(this.modalService
       .createModal(ModalAccountManagerComponent)
       .setTitle('Select an authentication method')
+      .setBindToRoute(this.router)
       .build())
       .then(writeNSec => {
         if (writeNSec) {
@@ -49,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private openNostrSecretManager(): void {
     firstValueFrom(this.modalService
       .createModal(ModalNsecManagerComponent)
+      .setBindToRoute(this.router)
       .setTitle('Login')
       .build());
   }

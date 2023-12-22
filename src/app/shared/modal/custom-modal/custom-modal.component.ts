@@ -19,7 +19,7 @@ export class CustomModalComponent extends ModalDirective {
   display = 'none';
 
   constructor(
-    private ngZone: NgZone
+    protected ngZone: NgZone
   ) {
     super();
   }

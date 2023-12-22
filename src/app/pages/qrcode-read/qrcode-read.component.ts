@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
 import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
@@ -13,7 +14,7 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './qrcode-read.component.html',
   styleUrls: ['./qrcode-read.component.scss']
 })
-export class QrcodeReadComponent implements OnInit {
+export class QrcodeReadComponent implements OnInit, OnDestroy {
 
   @ViewChild('video', { read: ElementRef })
   videoEl?: ElementRef<HTMLVideoElement>;
@@ -26,17 +27,17 @@ export class QrcodeReadComponent implements OnInit {
     private authenticatedProfile$: AuthenticatedProfileObservable,
     private modalService: ModalService,
     private profileProxy: ProfileProxy,
-    private error$: MainErrorObservable
+    private error$: MainErrorObservable,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.camActive = true;
-  }
-
-  ngAfterViewInit(): void {
-    if (this.camActive && this.videoEl && this.videoEl.nativeElement) {
-      this.readQRCode(this.videoEl.nativeElement);
-    }
+    setTimeout(() => {
+      if (this.camActive && this.videoEl && this.videoEl.nativeElement) {
+        this.readQRCode(this.videoEl.nativeElement);
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -55,7 +56,7 @@ export class QrcodeReadComponent implements OnInit {
   private async readQRCode(video: HTMLVideoElement): Promise<void> {
     const qrScanner = new QrScanner(
       video, result => this.triggerResult(result.data)
-        .then(() => history.back())
+        .then(() => this.router.navigate(['/auctions-list']))
         .catch(e => this.error$.next(e)), {}
     );
 
@@ -84,6 +85,7 @@ export class QrcodeReadComponent implements OnInit {
   private async triggerResultAsNostrSecret(nsec: string): Promise<void> {
     const pin = await firstValueFrom(this.modalService
       .createModal(ModalPinManagerComponent)
+      .setBindToRoute(this.router)
       .setTitle('Create a pin')
       .build());
 
@@ -106,6 +108,7 @@ export class QrcodeReadComponent implements OnInit {
   ): Promise<void> {
     const key = await firstValueFrom(this.modalService
       .createModal(ModalPinManagerComponent)
+      .setBindToRoute(this.router)
       .setTitle('Open pin')
       .build());
 
@@ -130,6 +133,7 @@ export class QrcodeReadComponent implements OnInit {
 
     const choosen = await firstValueFrom(this.modalService
       .createModal(ModalChooseCamComponent)
+      .setBindToRoute(this.router)
       .setData(cameras)
       .setTitle('Choose one camera')
       .build());

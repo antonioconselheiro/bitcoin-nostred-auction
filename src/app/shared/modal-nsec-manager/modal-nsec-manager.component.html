@@ -4,9 +4,8 @@
       <input
         required
         #authModalNsecField
-        [class.has-value]="authModalNsecField.value"
         id="authModalNsecField"
-        [type]="showNsec ? 'text' : 'password'"
+        [attr.type]="showNsec ? 'text' : 'password'"
         name="nsec"
         maxlength="64"
         formControlName="nsec"
@@ -25,7 +24,6 @@
         required
         id="authModalPinField"
         #authModalPinField
-        [class.has-value]="authModalPinField.value"
         [type]="showPin ? 'text' : 'password'"
         name="pin"
         maxlength="64"
