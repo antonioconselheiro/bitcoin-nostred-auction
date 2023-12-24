@@ -116,15 +116,10 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
       return firstValueFrom(this.modalService.alertError('Invalid key'));
     }
 
-    try {
-      await this.authenticatedProfile$.authenticateEncryptedEncode(
-        encryptedEncode, key
-      );
-      debugger;
-    } catch (e) {
-      debugger;
+    await this.authenticatedProfile$.authenticateEncryptedEncode(
+      encryptedEncode, key
+    );
 
-    }
     return Promise.resolve();
   }
 
