@@ -1,17 +1,17 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { IProfile } from '@domain/profile.interface';
-import { MainErrorObservable } from '@shared/main-error/main-error.observable';
 import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
 
 @Component({
-  selector: 'tw-profile-picture',
+  selector: 'auc-profile-picture',
   templateUrl: './profile-picture.component.html',
   styleUrls: ['./profile-picture.component.scss']
 })
 export class ProfilePictureComponent {
 
-  readonly defaultPicture = '/assets/profile/default-profile.png'; 
+  //  FIXME: include default picture profile when there is
+  //  no kind 0 event related to profile
+  readonly defaultPicture = ''; 
 
   @Input()
   tabindex?: number;
@@ -22,14 +22,9 @@ export class ProfilePictureComponent {
   @Input()
   account: IUnauthenticatedUser | null = null;
 
-  constructor(
-    private error$: MainErrorObservable,
-    private router: Router
-  ) { }
-
   openProfile(): void {
-    if (this.profile && this.profile.npub) {
-      this.router.navigate(['/p', this.profile.npub]).catch(e => this.error$.next(e));
+    if (this.profile) {
+      open('https://primal.net/p/' + this.profile.npub, '_BLANK');
     }
   }
 

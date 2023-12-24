@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProfile } from '@domain/profile.interface';
-import { ProfileEncrypt } from '@shared/profile/profile.encrypt';
+import { ProfileEncrypt } from '@shared/profile-service/profile.encrypt';
 import { BehaviorSubject } from 'rxjs';
 import { IUnauthenticatedUser } from './unauthenticated-user';
 

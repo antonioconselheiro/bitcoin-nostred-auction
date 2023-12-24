@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { ModalModule } from '@shared/modal/modal.module';
 import { CryptModule } from '@shared/crypt/crypt.module';
 import { UtilModule } from '@shared/util/util.module';
-import { ProfileModule } from '@shared/profile/profile.module';
+import { ProfileServiceModule } from '@shared/profile-service/profile-service.module';
 import { ModalChooseCamModule } from '@shared/modal-choose-cam/modal-choose-cam.module';
 import { ModalNsecManagerModule } from '@shared/modal-nsec-manager/modal-nsec-manager.module';
 import { ModalAccountManagerModule } from '@shared/modal-account-manager/modal-account-manager.module';
@@ -25,7 +25,7 @@ import { AuthFooterModule } from '@shared/auth-footer/auth-footer.module';
     ModalModule,
     ErrorModule,
     CryptModule,
-    ProfileModule,
+    ProfileServiceModule,
     UtilModule,
     AppRouting,
     NostrApiModule,

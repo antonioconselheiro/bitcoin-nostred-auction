@@ -4,8 +4,8 @@ import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
 import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
 import { ModalService } from '@shared/modal/modal.service';
-import { AuthenticatedProfileObservable } from '@shared/profile/authenticated-profile.observable';
-import { ProfileProxy } from '@shared/profile/profile.proxy';
+import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
+import { ProfileProxy } from '@shared/profile-service/profile.proxy';
 import QrScanner from 'qr-scanner';
 import { firstValueFrom } from 'rxjs';
 
