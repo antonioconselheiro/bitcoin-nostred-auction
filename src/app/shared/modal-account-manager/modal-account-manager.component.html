@@ -1,9 +1,9 @@
 <nav>
   <ul>
-    <li (click)="chooseWrite()">
+    <li *ngIf="!profile" (click)="chooseWrite()">
       <a>Write NSEC</a>
     </li>
-    <li (click)="chooseFromQrcode()">
+    <li *ngIf="!profile" (click)="chooseFromQrcode()">
       <a>NSEC from QRCode</a>
     </li>
   </ul>
