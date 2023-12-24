@@ -14,6 +14,7 @@ import { SecurityServiceModule } from '@shared/security-service/security-service
 import { NostrApiModule } from '@shared/nostr-api/nostr-api.module';
 import { HtmlfyServiceModule } from '@shared/htmlfy/htmlfy-service.module';
 import { ErrorModule } from '@shared/error/error.module';
+import { AuthFooterModule } from '@shared/auth-footer/auth-footer.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ErrorModule } from '@shared/error/error.module';
     NostrApiModule,
     HtmlfyServiceModule,
     SecurityServiceModule,
+    AuthFooterModule,
     ModalAccountManagerModule,
     ModalChooseCamModule,
     ModalNsecManagerModule,

@@ -22,9 +22,6 @@
   <router-outlet></router-outlet>
 </div>
 
-<footer>
-  <button (click)="openNostrAccountManager()" class="btn btn-primary" type="button">Login</button>
-</footer>
-
+<auc-auth-footer></auc-auth-footer>
 <auc-custom-modal></auc-custom-modal>
 <auc-error [error]="error"></auc-error>

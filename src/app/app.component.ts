@@ -21,8 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
   error: IErrorNormalized | null = null;
 
   constructor(
-    private router: Router,
-    private modalService: ModalService,
     private error$: MainErrorObservable
   ) { }
 
@@ -34,26 +32,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  openNostrAccountManager(): void {
-    firstValueFrom(this.modalService
-      .createModal(ModalAccountManagerComponent)
-      .setTitle('Select an authentication method')
-      .setBindToRoute(this.router)
-      .build())
-      .then(writeNSec => {
-        if (writeNSec) {
-          this.openNostrSecretManager();
-        }
-      }).catch(e => console.error(e));
-  }
-
-  private openNostrSecretManager(): void {
-    firstValueFrom(this.modalService
-      .createModal(ModalNsecManagerComponent)
-      .setBindToRoute(this.router)
-      .setTitle('Login')
-      .build());
   }
 }
