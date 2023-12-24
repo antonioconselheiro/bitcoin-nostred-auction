@@ -22,12 +22,6 @@ export class ProfilePictureComponent {
   @Input()
   account: IUnauthenticatedUser | null = null;
 
-  openProfile(): void {
-    if (this.profile) {
-      open('https://primal.net/p/' + this.profile.npub, '_BLANK');
-    }
-  }
-
   getPicture(): string {
     if (this.profile && this.profile.picture) {
       return this.profile.picture;
