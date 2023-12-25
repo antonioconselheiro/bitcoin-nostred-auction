@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalAccountManagerComponent } from './modal-account-manager.component';
 import { RouterModule } from '@angular/router';
+import { ProfileWidgetModule } from '@shared/profile-widget/profile-widget.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ProfileWidgetModule
   ],
   exports: [
     ModalAccountManagerComponent
