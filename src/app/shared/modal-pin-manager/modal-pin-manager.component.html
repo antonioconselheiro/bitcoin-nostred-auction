@@ -6,18 +6,6 @@
   autocomplete="off"
 >
   <div>
-    <div *ngIf="showCheckboxToRememberAccount" class="input-checkbox">
-      <input
-        id="saveAccount"
-        #saveAccount
-        type="checkbox"
-        name="saveAccount"
-        maxlength="64"
-        formControlName="saveAccount"
-      />
-      <label for="saveAccount">Remember account</label>
-    </div>
-
     <div class="floating-label">
       <input
         required
@@ -35,6 +23,18 @@
           <div role="img"></div>
         </div>
       </button>
+    </div>
+
+    <div *ngIf="showCheckboxToRememberAccount" class="input-checkbox">
+      <input
+        id="saveAccount"
+        #saveAccount
+        type="checkbox"
+        name="saveAccount"
+        maxlength="64"
+        formControlName="saveAccount"
+      />
+      <label for="saveAccount">Remember account</label>
     </div>
   </div>
 </form>

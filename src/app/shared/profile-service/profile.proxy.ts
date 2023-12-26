@@ -26,7 +26,7 @@ import { IUnauthenticatedUser } from "./unauthenticated-user";
 export class ProfileProxy {
 
   constructor(
-    private nostrSecretStatefull: AccountManagerStatefull,
+    private accountManagerStatefull: AccountManagerStatefull,
     private profileApi: ProfileApi,
     private profileCache: ProfileCache,
     private profileConverter: ProfileConverter
@@ -65,11 +65,11 @@ export class ProfileProxy {
     return this.loadProfile(this.profileConverter.castPubkeyToNostrPublic(pubkey));
   }
 
-  async loadAccount(nsec: string, pin?: string | void): Promise<IUnauthenticatedUser | null> {
+  async loadAccount(nsec: string, pin?: string | void | null): Promise<IUnauthenticatedUser | null> {
     const user = new NostrUser(nsec);
     const profile = await this.load(user.nostrPublic);
     profile.user = user;
-    const account = this.nostrSecretStatefull.createAccount(profile, pin);
+    const account = this.accountManagerStatefull.createAccount(profile, pin);
 
     return Promise.resolve(account);
   }

@@ -18,7 +18,7 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
 
   accounts: {
     [npub: string]: IUnauthenticatedUser
-  } = JSON.parse(localStorage.getItem('NostrSecretStatefull_accounts') || '{}');
+  } = JSON.parse(localStorage.getItem('accountManagerStatefull_accounts') || '{}');
 
   static instance: AuthenticatedProfileObservable | null = null;
 

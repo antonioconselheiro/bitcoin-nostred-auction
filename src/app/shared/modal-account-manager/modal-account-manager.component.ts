@@ -25,7 +25,7 @@ export class ModalAccountManagerComponent
 
   constructor(
     private router: Router,
-    private nostrSecretStatefull: AccountManagerStatefull,
+    private accountManagerStatefull: AccountManagerStatefull,
     private authenticatedProfile$: AuthenticatedProfileObservable,
     private error$: MainErrorObservable
   ) {
@@ -42,7 +42,7 @@ export class ModalAccountManagerComponent
   }
 
   private bindAccountsSubscription(): void {
-    this.subscriptions.add(this.nostrSecretStatefull.accounts$.subscribe({
+    this.subscriptions.add(this.accountManagerStatefull.accounts$.subscribe({
       next: accounts => this.accounts = accounts
     }));
   }

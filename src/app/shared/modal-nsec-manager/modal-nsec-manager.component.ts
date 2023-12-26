@@ -29,35 +29,51 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
 
     pin: ['', [
       Validators.required.bind(this)
-    ]]
+    ]],
+
+    rememberAccount: [false]
   });
 
   constructor(
     private fb: FormBuilder,
     private authenticatedProfile$: AuthenticatedProfileObservable,
-    private nostrSecretStatefull: AccountManagerStatefull,
+    private accountManagerStatefull: AccountManagerStatefull,
     private profileProxy: ProfileProxy
   ) {
     super();
   }
 
-  async login(nostrSecret: string, pin: string, saveAccount = false): Promise<(IUnauthenticatedUser & {
-    nsecEncrypted: string;
-  }) | null> {
-    const account = await this.profileProxy
-      .loadAccount(nostrSecret, pin) as IUnauthenticatedUser & {
-        nsecEncrypted: string;
-      };
-
-    if (this.isAccountNostrSecretEncrypted(account)) {
-      if (saveAccount) {
-        this.nostrSecretStatefull.addAccount(account);
-      }
-      await this.authenticatedProfile$.authenticateAccount(account, pin);
+  async login(): Promise<void> {
+    if (!this.accountForm.valid) {
+      return Promise.resolve();
     }
 
-    this.close();
-    return Promise.resolve(account);
+    const raw = this.accountForm.getRawValue();
+    if (!raw.nsec) {
+      return Promise.resolve();
+    }
+
+    const account = await this.profileProxy
+      .loadAccount(raw.nsec, raw.pin);
+    
+    if (this.isAccountNostrSecretEncrypted(account)) {
+      if (!raw.pin) { // without pin, you cannot save your account encrypted
+        return Promise.resolve();
+      }
+
+      await this.authenticatedProfile$
+        .authenticateAccount(account, raw.pin);
+
+      if (raw.rememberAccount) {
+        this.accountManagerStatefull.addAccount(account);
+      }
+    } else {
+      await this.authenticatedProfile$
+        .authenticateWithNostrSecret(raw.nsec);
+    }
+
+    setTimeout(() => this.close());
+    return Promise.resolve();
   }
 
   private isAccountNostrSecretEncrypted(

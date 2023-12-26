@@ -1,11 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MainErrorObservable } from '@shared/error/main-error.observable';
-import { ModalAccountManagerComponent } from '@shared/modal-account-manager/modal-account-manager.component';
-import { ModalNsecManagerComponent } from '@shared/modal-nsec-manager/modal-nsec-manager.component';
-import { ModalService } from '@shared/modal/modal.service';
 import { IErrorNormalized } from 'ecma-error-normalizer';
-import { Subscription, firstValueFrom } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
