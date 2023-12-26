@@ -44,6 +44,7 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
   }
 
   async login(): Promise<void> {
+    debugger;
     if (!this.accountForm.valid) {
       return Promise.resolve();
     }

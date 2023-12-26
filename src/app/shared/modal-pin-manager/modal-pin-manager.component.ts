@@ -19,7 +19,7 @@ export class ModalPinManagerComponent extends ModalableDirective<{
   override response = new Subject<IPinManagerOptions | void>();
 
   pinForm = this.fb.group({
-    saveAccount: [false],
+    rememberAccount: [false],
     pin: ['', [
       Validators.required.bind(this)
     ]]
@@ -44,7 +44,10 @@ export class ModalPinManagerComponent extends ModalableDirective<{
       const raw = this.pinForm.getRawValue();
 
       if (raw.pin) {
-        this.response.next({ pin: raw.pin });
+        this.response.next({
+          pin: raw.pin,
+          rememberAccount: !!raw.rememberAccount
+        });
       }
     }
 

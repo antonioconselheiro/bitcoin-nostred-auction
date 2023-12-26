@@ -4,6 +4,7 @@ import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
 import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
 import { ModalService } from '@shared/modal/modal.service';
+import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
 import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { ProfileProxy } from '@shared/profile-service/profile.proxy';
 import QrScanner from 'qr-scanner';
@@ -25,6 +26,7 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
 
   constructor(
     private authenticatedProfile$: AuthenticatedProfileObservable,
+    private accountManagerStatefull: AccountManagerStatefull,
     private modalService: ModalService,
     private profileProxy: ProfileProxy,
     private error$: MainErrorObservable,
@@ -32,16 +34,20 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.initCamera();
+  }
+
+  ngOnDestroy(): void {
+    return this.stop();
+  }
+
+  private initCamera(): void {
     this.camActive = true;
     setTimeout(() => {
       if (this.camActive && this.videoEl && this.videoEl.nativeElement) {
         this.readQRCode(this.videoEl.nativeElement);
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    return this.stop();
   }
 
   private stop(): void {
@@ -129,9 +135,14 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
     }
 
     const { pin, rememberAccount } = resultset;
-    await this.authenticatedProfile$.authenticateEncryptedEncode(
+    const profile = await this.authenticatedProfile$.authenticateEncryptedEncode(
       encryptedEncode, pin
     );
+
+    if (rememberAccount) {
+      const account = this.accountManagerStatefull.createAccount(profile, pin);
+      this.accountManagerStatefull.addAccount(account);
+    }
 
     return Promise.resolve();
   }
