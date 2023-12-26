@@ -2,19 +2,24 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ModalableDirective } from '@shared/modal/modalable.directive';
 import { Subject } from 'rxjs';
+import { IPinManagerOptions } from './pin-manager-options.interface';
 
 @Component({
   selector: 'auc-modal-pin-manager',
   templateUrl: './modal-pin-manager.component.html',
   styleUrls: ['./modal-pin-manager.component.scss']
 })
-export class ModalPinManagerComponent extends ModalableDirective<void, string> {
+export class ModalPinManagerComponent extends ModalableDirective<{
+  showCheckboxToRememberAccount?: boolean
+}, IPinManagerOptions> {
 
   showPin = false;
+  showCheckboxToRememberAccount = false;
 
-  override response = new Subject<string | void>();
+  override response = new Subject<IPinManagerOptions | void>();
 
   pinForm = this.fb.group({
+    rememberAccount: [false],
     pin: ['', [
       Validators.required.bind(this)
     ]]
@@ -26,6 +31,10 @@ export class ModalPinManagerComponent extends ModalableDirective<void, string> {
     super();
   }
 
+  override onInjectData(data: { showCheckboxToRememberAccount?: boolean | undefined; }): void {
+    this.showCheckboxToRememberAccount = data.showCheckboxToRememberAccount || false;
+  }
+
   toggleShowPin(): void {
     this.showPin = !this.showPin;
   }
@@ -33,8 +42,12 @@ export class ModalPinManagerComponent extends ModalableDirective<void, string> {
   onSubmitPin(): void {
     if (this.pinForm.valid) {
       const raw = this.pinForm.getRawValue();
+
       if (raw.pin) {
-        this.response.next(raw.pin);
+        this.response.next({
+          pin: raw.pin,
+          rememberAccount: !!raw.rememberAccount
+        });
       }
     }
 

@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalAccountManagerComponent } from './modal-account-manager.component';
-import { RouterModule } from '@angular/router';
+import { AuthFooterComponent } from './auth-footer.component';
 import { ProfileWidgetModule } from '@shared/profile-widget/profile-widget.module';
 
 @NgModule({
   declarations: [
-    ModalAccountManagerComponent
+    AuthFooterComponent
   ],
   imports: [
     CommonModule,
-    RouterModule,
     ProfileWidgetModule
   ],
   exports: [
-    ModalAccountManagerComponent
+    AuthFooterComponent
   ]
 })
-export class ModalAccountManagerModule { }
+export class AuthFooterModule { }

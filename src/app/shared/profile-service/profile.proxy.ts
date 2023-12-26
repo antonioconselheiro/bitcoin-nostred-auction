@@ -8,8 +8,8 @@ import { NostrEventKind } from "@domain/nostr-event-kind.enum";
 import { DataLoadType } from "@domain/data-load.type";
 import { TNostrPublic } from "@domain/nostr-public.type";
 import { NostrUser } from "@domain/nostr-user";
-import { NostrSecretStatefull } from "@shared/security-service/nostr-secret.statefull";
-import { IUnauthenticatedUser } from "@shared/security-service/unauthenticated-user";
+import { AccountManagerStatefull } from "./account-manager.statefull";
+import { IUnauthenticatedUser } from "./unauthenticated-user";
 
 /**
  * Orchestrate the interaction with the profile data,
@@ -26,7 +26,7 @@ import { IUnauthenticatedUser } from "@shared/security-service/unauthenticated-u
 export class ProfileProxy {
 
   constructor(
-    private nostrSecretStatefull: NostrSecretStatefull,
+    private accountManagerStatefull: AccountManagerStatefull,
     private profileApi: ProfileApi,
     private profileCache: ProfileCache,
     private profileConverter: ProfileConverter
@@ -65,11 +65,11 @@ export class ProfileProxy {
     return this.loadProfile(this.profileConverter.castPubkeyToNostrPublic(pubkey));
   }
 
-  async loadAccount(nsec: string, pin?: string | void): Promise<IUnauthenticatedUser | null> {
+  async loadAccount(nsec: string, pin?: string | void | null): Promise<IUnauthenticatedUser | null> {
     const user = new NostrUser(nsec);
     const profile = await this.load(user.nostrPublic);
     profile.user = user;
-    const account = this.nostrSecretStatefull.createAccount(profile, pin);
+    const account = this.accountManagerStatefull.createAccount(profile, pin);
 
     return Promise.resolve(account);
   }

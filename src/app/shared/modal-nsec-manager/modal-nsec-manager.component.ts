@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomValidator } from '@shared/custom-validator/custom-validator';
 import { ModalableDirective } from '@shared/modal/modalable.directive';
-import { AuthenticatedProfileObservable } from '@shared/profile/authenticated-profile.observable';
-import { ProfileProxy } from '@shared/profile/profile.proxy';
-import { NostrSecretStatefull } from '@shared/security-service/nostr-secret.statefull';
-import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
+import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
+import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
+import { ProfileProxy } from '@shared/profile-service/profile.proxy';
+import { IUnauthenticatedUser } from '@shared/profile-service/unauthenticated-user';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -29,35 +29,52 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
 
     pin: ['', [
       Validators.required.bind(this)
-    ]]
+    ]],
+
+    rememberAccount: [false]
   });
 
   constructor(
     private fb: FormBuilder,
     private authenticatedProfile$: AuthenticatedProfileObservable,
-    private nostrSecretStatefull: NostrSecretStatefull,
+    private accountManagerStatefull: AccountManagerStatefull,
     private profileProxy: ProfileProxy
   ) {
     super();
   }
 
-  async login(nostrSecret: string, pin: string, saveAccount = false): Promise<(IUnauthenticatedUser & {
-    nsecEncrypted: string;
-  }) | null> {
-    const account = await this.profileProxy
-      .loadAccount(nostrSecret, pin) as IUnauthenticatedUser & {
-        nsecEncrypted: string;
-      };
-
-    if (this.isAccountNostrSecretEncrypted(account)) {
-      if (saveAccount) {
-        this.nostrSecretStatefull.addAccount(account);
-      }
-      await this.authenticatedProfile$.authenticateAccount(account, pin);
+  async login(): Promise<void> {
+    debugger;
+    if (!this.accountForm.valid) {
+      return Promise.resolve();
     }
 
-    this.close();
-    return Promise.resolve(account);
+    const raw = this.accountForm.getRawValue();
+    if (!raw.nsec) {
+      return Promise.resolve();
+    }
+
+    const account = await this.profileProxy
+      .loadAccount(raw.nsec, raw.pin);
+    
+    if (this.isAccountNostrSecretEncrypted(account)) {
+      if (!raw.pin) { // without pin, you cannot save your account encrypted
+        return Promise.resolve();
+      }
+
+      await this.authenticatedProfile$
+        .authenticateAccount(account, raw.pin);
+
+      if (raw.rememberAccount) {
+        this.accountManagerStatefull.addAccount(account);
+      }
+    } else {
+      await this.authenticatedProfile$
+        .authenticateWithNostrSecret(raw.nsec);
+    }
+
+    setTimeout(() => this.close());
+    return Promise.resolve();
   }
 
   private isAccountNostrSecretEncrypted(

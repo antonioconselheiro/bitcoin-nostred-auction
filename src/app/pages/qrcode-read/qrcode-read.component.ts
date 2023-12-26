@@ -4,8 +4,9 @@ import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
 import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
 import { ModalService } from '@shared/modal/modal.service';
-import { AuthenticatedProfileObservable } from '@shared/profile/authenticated-profile.observable';
-import { ProfileProxy } from '@shared/profile/profile.proxy';
+import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
+import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
+import { ProfileProxy } from '@shared/profile-service/profile.proxy';
 import QrScanner from 'qr-scanner';
 import { firstValueFrom } from 'rxjs';
 
@@ -25,6 +26,7 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
 
   constructor(
     private authenticatedProfile$: AuthenticatedProfileObservable,
+    private accountManagerStatefull: AccountManagerStatefull,
     private modalService: ModalService,
     private profileProxy: ProfileProxy,
     private error$: MainErrorObservable,
@@ -32,16 +34,20 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.initCamera();
+  }
+
+  ngOnDestroy(): void {
+    return this.stop();
+  }
+
+  private initCamera(): void {
     this.camActive = true;
     setTimeout(() => {
       if (this.camActive && this.videoEl && this.videoEl.nativeElement) {
         this.readQRCode(this.videoEl.nativeElement);
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    return this.stop();
   }
 
   private stop(): void {
@@ -83,42 +89,60 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
   }
 
   private async triggerResultAsNostrSecret(nsec: string): Promise<void> {
-    const pin = await firstValueFrom(this.modalService
+    const resultset = await firstValueFrom(this.modalService
       .createModal(ModalPinManagerComponent)
       .setBindToRoute(this.router)
+      .setData({
+        showCheckboxToRememberAccount: true
+      })
       .setTitle('Create a pin')
       .build());
 
-      const account = await this.profileProxy
-        .loadAccount(nsec, pin);
+    if (!resultset || !resultset.pin) {
+      this.authenticatedProfile$.authenticateWithNostrSecret(nsec);
+      return;
+    }
+
+    const { rememberAccount, pin } = resultset;
+    const account = await this.profileProxy
+      .loadAccount(nsec, pin);
 
     if (
       account &&
-      this.authenticatedProfile$.hasEncriptedNostrSecret(account) &&
-      pin
+      rememberAccount &&
+      this.authenticatedProfile$.hasEncriptedNostrSecret(account)      
     ) {
       this.authenticatedProfile$.authenticateAccount(account, pin);
-    } else {
-      this.authenticatedProfile$.authenticateWithNostrSecret(nsec);
     }
   }
 
   private async triggerResultAsEncryptedEncodedNostrSecred(
     encryptedEncode: string
   ): Promise<void> {
-    const key = await firstValueFrom(this.modalService
+    const resultset = await firstValueFrom(this.modalService
       .createModal(ModalPinManagerComponent)
       .setBindToRoute(this.router)
+      .setData({
+        showCheckboxToRememberAccount: true
+      })
       .setTitle('Open pin')
       .build());
 
-    if (!key) {
+    if (!resultset || typeof resultset.pin !== 'string') {
+      //  FIXME: revisar quando chegar a hora de
+      //  implementar o fluxo de tentar novamente
       return firstValueFrom(this.modalService.alertError('Invalid key'));
     }
 
-    await this.authenticatedProfile$.authenticateEncryptedEncode(
-      encryptedEncode, key
+    const { pin, rememberAccount } = resultset;
+    const profile = await this.authenticatedProfile$.authenticateEncryptedEncode(
+      encryptedEncode, pin
     );
+
+    if (rememberAccount) {
+      const account = this.accountManagerStatefull.createAccount(profile, pin);
+      this.accountManagerStatefull.addAccount(account);
+    }
 
     return Promise.resolve();
   }

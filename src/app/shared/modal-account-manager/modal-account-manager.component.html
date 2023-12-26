@@ -1,10 +1,22 @@
 <nav>
   <ul>
-    <li (click)="chooseWrite()">
-      <a>Write NSEC</a>
+    <li *ngFor="let account of accounts">
+      <auc-profile-picture [account]="account"></auc-profile-picture>
+      <div class="profile-data">
+        <strong>{{account.displayName}}</strong>
+        <em>{{account.nip05}}</em>
+      </div>
     </li>
-    <li (click)="chooseFromQrcode()">
-      <a>NSEC from QRCode</a>
+    <ng-container *ngIf="!profile">
+      <li (click)="chooseWrite()">
+        <a>Write NSEC</a>
+      </li>
+      <li (click)="chooseFromQrcode()">
+        <a>NSEC from QRCode</a>
+      </li>
+    </ng-container>
+    <li *ngIf="profile" (click)="logout()">
+      <a>Logout</a>
     </li>
   </ul>
 </nav>

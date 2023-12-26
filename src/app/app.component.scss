@@ -20,17 +20,6 @@ header {
   }
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  padding: 1rem 0;
-  border-top: 1px solid;
-  background-color: #ddd;
-}
-
 .fixed-header {
   position: fixed;
   top: 0;

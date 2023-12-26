@@ -24,6 +24,18 @@
         </div>
       </button>
     </div>
+
+    <div *ngIf="showCheckboxToRememberAccount" class="input-checkbox">
+      <input
+        id="rememberAccount"
+        #rememberAccount
+        type="checkbox"
+        name="rememberAccount"
+        maxlength="64"
+        formControlName="rememberAccount"
+      />
+      <label for="rememberAccount">Remember account</label>
+    </div>
   </div>
 </form>
 

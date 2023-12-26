@@ -1,0 +1,12 @@
+<footer>
+  <button (click)="openNostrAccountManager()" class="authenticathed-profile" *ngIf="profile">
+    <auc-profile-picture [profile]="profile"></auc-profile-picture>
+    <div class="profile-data">
+      <strong>{{profile.display_name || profile.name}}</strong>
+      <em>{{profile.nip05}}</em>
+    </div>
+  </button>
+  <ng-container *ngIf="!profile">
+    <button (click)="openNostrAccountManager()" class="btn btn-primary" type="button">Login</button>
+  </ng-container>
+</footer>

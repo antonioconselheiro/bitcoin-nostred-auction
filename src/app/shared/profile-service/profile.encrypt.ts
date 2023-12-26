@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NostrUser } from '@domain/nostr-user';
-import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
 import { IProfile } from '@domain/profile.interface';
 import * as CryptoJS from 'crypto-js';
+import { IUnauthenticatedUser } from './unauthenticated-user';
 
 @Injectable()
 export class ProfileEncrypt {
@@ -10,7 +10,7 @@ export class ProfileEncrypt {
   private readonly mode = CryptoJS.mode.CBC;
   private readonly padding = CryptoJS.pad.Pkcs7;
 
-  encryptAccount(profile: IProfile, pin?: string | void | undefined): IUnauthenticatedUser | IUnauthenticatedUser & { nsecEncrypted: string } | null {
+  encryptAccount(profile: IProfile, pin?: string | void | null): IUnauthenticatedUser | IUnauthenticatedUser & { nsecEncrypted: string } | null {
     const nostrSecret = profile.user.nostrSecret;
     const displayName = profile.display_name || profile.name;
     const picture = profile.picture || ''; // TODO: fixar uma imagem padrão

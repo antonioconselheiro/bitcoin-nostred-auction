@@ -1,4 +1,9 @@
-<form [formGroup]="accountForm" novalidate autocomplete="off">
+<form
+  novalidate
+  autocomplete="off"
+  id="formNostrSecretManager"
+  [formGroup]="accountForm"
+>
   <div>
     <div class="floating-label">
       <input
@@ -37,11 +42,26 @@
         </div>
       </button>
     </div>
+
+    <div class="input-checkbox">
+      <input
+        id="rememberAccount"
+        #rememberAccount
+        type="checkbox"
+        name="rememberAccount"
+        maxlength="64"
+        formControlName="rememberAccount"
+      />
+      <label for="rememberAccount">Remember account</label>
+    </div>
   </div>
 </form>
 
 <div class="button-group">
-  <button (click)="login(authModalNsecField.value, authModalPinField.value, true)" class="btn" type="button">Add account & Login</button>
-  <button (click)="login(authModalNsecField.value, authModalPinField.value)" class="btn btn-primary" type="button">Login</button>
+  <button
+    type="submit"
+    form="formNostrSecretManager"
+    class="btn btn-primary"
+  >Login</button>
 </div>
 
