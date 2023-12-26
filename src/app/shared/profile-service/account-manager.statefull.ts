@@ -5,22 +5,24 @@ import { BehaviorSubject } from 'rxjs';
 import { IUnauthenticatedUser } from './unauthenticated-user';
 
 @Injectable()
-export class NostrSecretStatefull {
+export class AccountManagerStatefull {
+
+  private readonly storageKey = 'AccountManagerStatefull_accounts';
 
   accounts: {
     [npub: string]: IUnauthenticatedUser
-  } = JSON.parse(localStorage.getItem('NostrSecretStatefull_accounts') || '{}');
+  } = JSON.parse(localStorage.getItem(this.storageKey) || '{}');
 
-  static instance: NostrSecretStatefull | null = null;
+  static instance: AccountManagerStatefull | null = null;
 
   constructor(
     private profileEncrypt: ProfileEncrypt
   ) {
-    if (!NostrSecretStatefull.instance) {
-      NostrSecretStatefull.instance = this;
+    if (!AccountManagerStatefull.instance) {
+      AccountManagerStatefull.instance = this;
     }
 
-    return NostrSecretStatefull.instance;
+    return AccountManagerStatefull.instance;
   }
 
   private accountsSubject = new BehaviorSubject<IUnauthenticatedUser[]>(Object.values(this.accounts));
@@ -47,7 +49,7 @@ export class NostrSecretStatefull {
   private update(): void {
     //  FIXME: criar um mecanismo que persita dados
     //  automaticamente em localStorage ou no storage local
-    localStorage.setItem('NostrSecretStatefull_accounts', JSON.stringify(this.accounts))
+    localStorage.setItem(this.storageKey, JSON.stringify(this.accounts))
     this.accountsSubject.next(Object.values(this.accounts));
   }
 }

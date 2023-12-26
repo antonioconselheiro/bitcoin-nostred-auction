@@ -29,20 +29,26 @@
 ///
 /// @example
 /// ```
-/// <div class="input-checkbox">
+/// <div class="floating-label error">
 ///   <input
 ///     required
-///     id="saveAccount"
-///     #saveAccount
-///     type="checkbox"
-///     name="pin"
+///     type="password"
+///     name="nsec"
 ///     maxlength="64"
-///     formControlName="pin"
+///     formControlName="nsec"
 ///   />
-///   <label for="saveAccount">Save</label>
+///   <label for="authModalNsecField">Nostr Secret (nsec)</label>
+///
+///   <button type="button" class="bordered svg-button icon-show">
+///     <div class="svg-wrapper">
+///       <div role="img"></div>
+///     </div>
+///   </button>
+///
+///   <span class="error">Nostr Secret cannot be blank</span>
 /// </div>
 /// ```
-.floating-label {
+.input-checkbox {
   display: flex;
   align-items: center;
   position: relative;

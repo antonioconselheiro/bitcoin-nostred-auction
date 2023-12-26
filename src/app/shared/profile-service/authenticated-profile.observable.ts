@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IProfile } from '@domain/profile.interface';
-import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
 import { BehaviorSubject } from 'rxjs';
 import { ProfileEncrypt } from './profile.encrypt';
 import { ProfileProxy } from './profile.proxy';
 import { NostrUser } from '@domain/nostr-user';
+import { IUnauthenticatedUser } from './unauthenticated-user';
 
 /**
  * This class responsible for caching event information
@@ -15,6 +15,10 @@ import { NostrUser } from '@domain/nostr-user';
  */
 @Injectable()
 export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | null> {
+
+  accounts: {
+    [npub: string]: IUnauthenticatedUser
+  } = JSON.parse(localStorage.getItem('NostrSecretStatefull_accounts') || '{}');
 
   static instance: AuthenticatedProfileObservable | null = null;
 

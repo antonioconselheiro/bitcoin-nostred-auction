@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NostrUser } from '@domain/nostr-user';
-import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
 import { IProfile } from '@domain/profile.interface';
 import * as CryptoJS from 'crypto-js';
+import { IUnauthenticatedUser } from './unauthenticated-user';
 
 @Injectable()
 export class ProfileEncrypt {

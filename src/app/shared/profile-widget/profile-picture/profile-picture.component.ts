@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IProfile } from '@domain/profile.interface';
-import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
+import { IUnauthenticatedUser } from '@shared/profile-service/unauthenticated-user';
 
 @Component({
   selector: 'auc-profile-picture',

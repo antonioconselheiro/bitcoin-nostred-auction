@@ -83,41 +83,54 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
   }
 
   private async triggerResultAsNostrSecret(nsec: string): Promise<void> {
-    const pin = await firstValueFrom(this.modalService
+    const resultset = await firstValueFrom(this.modalService
       .createModal(ModalPinManagerComponent)
       .setBindToRoute(this.router)
+      .setData({
+        showCheckboxToRememberAccount: true
+      })
       .setTitle('Create a pin')
       .build());
 
-      const account = await this.profileProxy
-        .loadAccount(nsec, pin);
+    if (!resultset || !resultset.pin) {
+      this.authenticatedProfile$.authenticateWithNostrSecret(nsec);
+      return;
+    }
+
+    const { rememberAccount, pin } = resultset;
+    const account = await this.profileProxy
+      .loadAccount(nsec, pin);
 
     if (
       account &&
-      this.authenticatedProfile$.hasEncriptedNostrSecret(account) &&
-      pin
+      rememberAccount &&
+      this.authenticatedProfile$.hasEncriptedNostrSecret(account)      
     ) {
       this.authenticatedProfile$.authenticateAccount(account, pin);
-    } else {
-      this.authenticatedProfile$.authenticateWithNostrSecret(nsec);
     }
   }
 
   private async triggerResultAsEncryptedEncodedNostrSecred(
     encryptedEncode: string
   ): Promise<void> {
-    const key = await firstValueFrom(this.modalService
+    const resultset = await firstValueFrom(this.modalService
       .createModal(ModalPinManagerComponent)
       .setBindToRoute(this.router)
+      .setData({
+        showCheckboxToRememberAccount: true
+      })
       .setTitle('Open pin')
       .build());
 
-    if (!key) {
+    if (!resultset || typeof resultset.pin !== 'string') {
+      //  FIXME: revisar quando chegar a hora de
+      //  implementar o fluxo de tentar novamente
       return firstValueFrom(this.modalService.alertError('Invalid key'));
     }
 
+    const { pin, rememberAccount } = resultset;
     await this.authenticatedProfile$.authenticateEncryptedEncode(
-      encryptedEncode, key
+      encryptedEncode, pin
     );
 
     return Promise.resolve();

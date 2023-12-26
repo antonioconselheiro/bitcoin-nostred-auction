@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { IProfile } from '@domain/profile.interface';
 import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
 import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
-import { NostrSecretStatefull } from '@shared/security-service/nostr-secret.statefull';
-import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
+import { IUnauthenticatedUser } from '@shared/profile-service/unauthenticated-user';
 import { Subject, Subscription } from 'rxjs';
 
 @Component({
@@ -25,7 +25,7 @@ export class ModalAccountManagerComponent
 
   constructor(
     private router: Router,
-    private nostrSecretStatefull: NostrSecretStatefull,
+    private nostrSecretStatefull: AccountManagerStatefull,
     private authenticatedProfile$: AuthenticatedProfileObservable,
     private error$: MainErrorObservable
   ) {

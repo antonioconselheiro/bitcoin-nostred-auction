@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomValidator } from '@shared/custom-validator/custom-validator';
 import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
 import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { ProfileProxy } from '@shared/profile-service/profile.proxy';
-import { NostrSecretStatefull } from '@shared/security-service/nostr-secret.statefull';
-import { IUnauthenticatedUser } from '@shared/security-service/unauthenticated-user';
+import { IUnauthenticatedUser } from '@shared/profile-service/unauthenticated-user';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -35,7 +35,7 @@ export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
   constructor(
     private fb: FormBuilder,
     private authenticatedProfile$: AuthenticatedProfileObservable,
-    private nostrSecretStatefull: NostrSecretStatefull,
+    private nostrSecretStatefull: AccountManagerStatefull,
     private profileProxy: ProfileProxy
   ) {
     super();
