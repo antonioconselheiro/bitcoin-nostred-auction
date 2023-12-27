@@ -21,6 +21,7 @@
     "crypto-js": "^4.2.0",
     "ecma-error-normalizer": "^1.0.5",
     "moment": "^2.29.4",
+    "ngx-chips": "^3.0.0",
     "nostr-tools": "^2.1.0",
     "qr-scanner": "^1.4.2",
     "qrcode": "^1.5.3",
