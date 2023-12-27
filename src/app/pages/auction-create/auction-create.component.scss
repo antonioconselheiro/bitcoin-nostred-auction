@@ -1,0 +1,32 @@
+@import "settings";
+
+.container {
+  display: flex;
+  justify-content: center;
+
+  form {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  @media (max-width: $max-mobile) {
+    padding: 10px;
+  }
+}
+
+.image-input {
+  margin-bottom: 1.75rem;
+
+  .image-input-preview {
+    margin-top: 15px;
+  }
+
+  .error {
+    color: $error;
+    font-size: 13px;
+  }
+}
+
+tag-input {
+  margin-bottom: 1.75rem;
+}

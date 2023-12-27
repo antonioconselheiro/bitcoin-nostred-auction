@@ -1,0 +1,53 @@
+<div class="container">
+  <form [formGroup]="auctionForm" (ngSubmit)="onSubmit()">
+
+    <div class="floating-label" [class.error]="submitted && formControl.name.errors">
+      <input type="text" id="name" maxlength="30" formControlName="name" #nameField [class.has-value]="nameField.value">
+      <label for="name">Name</label>
+
+      <span *ngIf="submitted && formControl.name.errors?.required" class="error">Name is required</span>
+    </div>
+
+    <div class="floating-label" [class.error]="submitted && formControl.description.errors">
+      <input type="text" id="description" maxlength="100" formControlName="description" #descriptionField
+        [class.has-value]="descriptionField.value">
+      <label for="description">Description</label>
+    </div>
+
+    <div class="floating-label" [class.error]="submitted && formControl.completionDate.errors">
+      <input type="date" id="completionDate" class="has-value" formControlName="completionDate">
+      <label for="completionDate">Completion Date</label>
+
+      <span *ngIf="submitted && formControl.completionDate.errors?.required" class="error">Completion date is
+        required</span>
+    </div>
+
+    <div class="floating-label" [class.error]="submitted && formControl.initialValue.errors">
+      <input type="text" id="initialValue" formControlName="initialValue" #initialValueField
+        [class.has-value]="initialValueField.value">
+      <label for="initialValue">Initial Value</label>
+
+      <span *ngIf="submitted && formControl.initialValue.errors?.required" class="error">Initial value is
+        required</span>
+    </div>
+
+    <div class="image-input">
+      <button type="button" (click)="fileInput.click()">Select image</button>
+      <input style="display: none" type="file" (change)="onImageSelected($event)" #fileInput>
+
+      <div class="image-input-preview">
+        <span class="no-image-alert" *ngIf="!formControl.images.value.length">No images chosen</span>
+
+        <auc-carousel-images [images]="formControl.images.value" (onRemoveImage)="onRemoveImage($event)"
+          (onSetImageCover)="onSetImageCover($event)" />
+      </div>
+
+      <span *ngIf="submitted && !formControl.images.value.length" class="error">At least one image is required</span>
+    </div>
+
+    <tag-input [modelAsStrings]="true" formControlName="tags" placeholder="Tags" theme="tag-input-theme">
+    </tag-input>
+
+    <button type="submit">Create</button>
+  </form>
+</div>
