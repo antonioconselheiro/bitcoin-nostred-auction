@@ -1,3 +1,4 @@
+@import 'settings';
 ///
 /// This is a container for your input form field.
 /// The placeholder turn into label when the field is focused or when it has value.
@@ -49,7 +50,7 @@
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 15px;
-  height: 3.5rem;
+  min-height: 3.5rem;
   padding-right: 20px;
   margin-bottom: 1.75rem;
 
@@ -58,15 +59,15 @@
   }
 
   &.error {
-    border: 1px solid var(--error);
+    border: 1px solid $error;
 
     label {
-      color: var(--error);
+      color: $error;
     }
 
     .error {
       display: block;
-      color: var(--error);
+      color: $error;
       font-size: 13px;
       position: absolute;
       top: 59px;
@@ -86,13 +87,12 @@
 
   input {
     width: 100%;
-    padding: 10px;
     border-radius: 15px;
     background-color: var(--base);
     color: var(--contrast);
     outline: none;
-    margin-top: 1rem;
-    padding: 20px;
+    margin-top: 10px;
+    padding: 0 20px;
     box-sizing: border-box;
     border: 0;
 

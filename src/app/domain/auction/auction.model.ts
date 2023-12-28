@@ -1,9 +1,14 @@
-export interface Auction {
+export interface IAuction {
   id: string;
   name: string;
   description: string;
-  image: string;
-  expirationDate: Date;
+  images: IAuctionImage[];
+  completionDate: Date;
   highestBid: number;
   bidderName: string
+}
+
+export interface IAuctionImage {
+  url: string;
+  isCover: boolean
 }

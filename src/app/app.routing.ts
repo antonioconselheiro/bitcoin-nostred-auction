@@ -33,6 +33,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'auction-create',
+    loadChildren: () => import('./pages/auction-create/auction-create.module').then(m => m.AuctionCreateModule)
+  },
+
+  {
     path: '',
     redirectTo: 'auctions-list',
     pathMatch: 'full'

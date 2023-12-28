@@ -5,7 +5,8 @@
       <!-- Maybe it should be a component -->
       <div class="card">
         <div class="card-img">
-          <img [src]="item.image" alt="{{item.name}} image">
+          <!-- FIXME: create pipe to show the cover imagem only -->
+          <img [src]="item.images[0].url" alt="{{item.name}} image">
         </div>
 
         <div class="card-details">
@@ -20,7 +21,7 @@
             </div>
             <hr>
             <div class="card-details-expiration-date">
-              <span>Time left: {{item.expirationDate | timeLeft | async}}</span>
+              <span>Time left: {{item.completionDate | timeLeft | async}}</span>
             </div>
           </div>
         </div>

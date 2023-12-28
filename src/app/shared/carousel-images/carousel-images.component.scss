@@ -1,0 +1,44 @@
+@import 'settings';
+
+$images-count: 3;
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.carousel-imagens {
+  display: flex;
+  flex: 1;
+  scroll-snap-type: x mandatory;
+  text-align: center;
+  overflow-x: auto;
+
+  img {
+    width: 100%;
+  }
+
+  .carousel-item {
+    position: relative;
+    padding: 0 10px;
+    scroll-snap-align: start;
+    min-width: calc(100% / $images-count);
+    width: calc(100% / $images-count);
+  }
+}
+
+.actions {
+  display: flex;
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  gap: 3px;
+
+  .icon-favourite {
+    &.is-cover {
+      background-color: #f8f413;
+    }
+  }
+}
