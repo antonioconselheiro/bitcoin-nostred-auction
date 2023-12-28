@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="carousel-imagens">
+    <div class="carousel-item" *ngFor="let image of images; trackBy: trackByFn">
+      <img [src]="image.url" aria-hidden="true" />
+
+      <div class="actions">
+        <button type="button" class="icon-favourite svg-button" [class.is-cover]="image.isCover"
+          (click)="onSetImageCover.emit(image)" title="When selected, the image will be set as the cover image">
+          <div class="svg-wrapper">
+            <div role="img"></div>
+          </div>
+        </button>
+        <button type="button" class="icon-close svg-button" (click)="onRemoveImage.emit(image)">
+          <div class="svg-wrapper">
+            <div role="img"></div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
