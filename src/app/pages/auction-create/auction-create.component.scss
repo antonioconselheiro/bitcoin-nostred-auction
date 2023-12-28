@@ -3,10 +3,13 @@
 .container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   form {
     width: 100%;
     max-width: 500px;
+    margin-top: 20px;
   }
 
   @media (max-width: $max-mobile) {
@@ -29,4 +32,9 @@
 
 tag-input {
   margin-bottom: 1.75rem;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: end;
 }

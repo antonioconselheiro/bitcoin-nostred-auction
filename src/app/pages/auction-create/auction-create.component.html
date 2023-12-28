@@ -1,4 +1,6 @@
 <div class="container">
+  <h1>Create Auction</h1>
+
   <form [formGroup]="auctionForm" (ngSubmit)="onSubmit()">
 
     <div class="floating-label" [class.error]="submitted && formControl.name.errors">
@@ -32,7 +34,7 @@
     </div>
 
     <div class="image-input">
-      <button type="button" (click)="fileInput.click()">Select image</button>
+      <button type="button" class="btn" (click)="fileInput.click()">Select image</button>
       <input style="display: none" type="file" (change)="onImageSelected($event)" #fileInput>
 
       <div class="image-input-preview">
@@ -48,6 +50,8 @@
     <tag-input [modelAsStrings]="true" formControlName="tags" placeholder="Tags" theme="tag-input-theme">
     </tag-input>
 
-    <button type="submit">Create</button>
+    <div class="btn-submit">
+      <button type="submit" class="btn btn-primary btn-submit">Create</button>
+    </div>
   </form>
 </div>
