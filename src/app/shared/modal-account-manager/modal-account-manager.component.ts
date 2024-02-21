@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IProfile } from '@domain/profile.interface';
 import { MainErrorObservable } from '@shared/error/main-error.observable';
-import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { ModalableDirective } from '@belomonte/async-modal-ngx';
 import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
 import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { IUnauthenticatedUser } from '@shared/profile-service/unauthenticated-user';
@@ -14,7 +14,7 @@ import { Subject, Subscription } from 'rxjs';
   styleUrls: ['./modal-account-manager.component.scss']
 })
 export class ModalAccountManagerComponent
-  extends ModalableDirective<void, boolean>
+  extends ModalableDirective<{ title: string }, boolean>
   implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();

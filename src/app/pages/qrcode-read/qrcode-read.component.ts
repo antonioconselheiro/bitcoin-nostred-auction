@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
 import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
-import { ModalService } from '@shared/modal/modal.service';
+import { ModalService } from '@belomonte/async-modal-ngx';
 import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
 import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { ProfileProxy } from '@shared/profile-service/profile.proxy';
@@ -82,9 +82,8 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
     } else if (/^encrypted:aes/.test(result)) {
       return this.triggerResultAsEncryptedEncodedNostrSecred(result);
     } else {
-      return firstValueFrom(this.modalService.alertError(
-        'There is no authentication content into this qrcode, content read: ' + result
-      ));
+      console.error('There is no authentication content into this qrcode, content read: ' + result);
+      return Promise.resolve();
     }
   }
 
@@ -93,9 +92,9 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
       .createModal(ModalPinManagerComponent)
       .setBindToRoute(this.router)
       .setData({
+        title: 'Create a pin',
         showCheckboxToRememberAccount: true
       })
-      .setTitle('Create a pin')
       .build());
 
     if (!resultset || !resultset.pin) {
@@ -123,15 +122,16 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
       .createModal(ModalPinManagerComponent)
       .setBindToRoute(this.router)
       .setData({
+        title: 'Open pin',
         showCheckboxToRememberAccount: true
       })
-      .setTitle('Open pin')
       .build());
 
     if (!resultset || typeof resultset.pin !== 'string') {
       //  FIXME: revisar quando chegar a hora de
       //  implementar o fluxo de tentar novamente
-      return firstValueFrom(this.modalService.alertError('Invalid key'));
+      console.error('Invalid key');
+      return;
     }
 
     const { pin, rememberAccount } = resultset;
@@ -149,8 +149,7 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
 
   private async chooseCam(cameras: Array<QrScanner.Camera>): Promise<QrScanner.Camera> {
     if (cameras.length === 0) {
-      await firstValueFrom(this.modalService
-        .alertError('No camera found'));
+      console.error('No camera found');
 
       return Promise.reject(new Error('No camera found'));
     } else if (cameras.length === 1) {
@@ -160,8 +159,10 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
     const choosen = await firstValueFrom(this.modalService
       .createModal(ModalChooseCamComponent)
       .setBindToRoute(this.router)
-      .setData(cameras)
-      .setTitle('Choose one camera')
+      .setData({
+        title: 'Choose one camera',
+        cameras
+      })
       .build());
 
     if (!choosen) {

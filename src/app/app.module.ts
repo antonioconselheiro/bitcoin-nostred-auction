@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
-import { ModalModule } from '@shared/modal/modal.module';
+import { MainModalModule } from '@shared/main-modal/main-modal.module';
 import { CryptModule } from '@shared/crypt/crypt.module';
 import { UtilModule } from '@shared/util/util.module';
 import { ProfileServiceModule } from '@shared/profile-service/profile-service.module';
@@ -21,7 +21,7 @@ import { AuthFooterModule } from '@shared/auth-footer/auth-footer.module';
   ],
   imports: [
     BrowserModule,
-    ModalModule,
+    MainModalModule,
     ErrorModule,
     CryptModule,
     ProfileServiceModule,

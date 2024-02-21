@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomValidator } from '@shared/custom-validator/custom-validator';
-import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { ModalableDirective } from '@belomonte/async-modal-ngx';
 import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
 import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { ProfileProxy } from '@shared/profile-service/profile.proxy';
@@ -13,7 +13,9 @@ import { Subject } from 'rxjs';
   templateUrl: './modal-nsec-manager.component.html',
   styleUrls: ['./modal-nsec-manager.component.scss']
 })
-export class ModalNsecManagerComponent extends ModalableDirective<void, void> {
+export class ModalNsecManagerComponent extends ModalableDirective<{
+  title: string
+}, void> {
 
   showNsec = false;
   showPin = false;
