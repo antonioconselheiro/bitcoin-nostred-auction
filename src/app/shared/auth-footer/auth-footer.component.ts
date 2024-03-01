@@ -4,7 +4,7 @@ import { IProfile } from '@domain/profile.interface';
 import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalAccountManagerComponent } from '@shared/modal-account-manager/modal-account-manager.component';
 import { ModalNsecManagerComponent } from '@shared/modal-nsec-manager/modal-nsec-manager.component';
-import { ModalService } from '@shared/modal/modal.service';
+import { ModalService } from '@belomonte/async-modal-ngx';
 import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { Subscription, firstValueFrom } from 'rxjs';
 
@@ -44,7 +44,9 @@ export class AuthFooterComponent implements OnInit, OnDestroy {
   openNostrAccountManager(): void {
     firstValueFrom(this.modalService
       .createModal(ModalAccountManagerComponent)
-      .setTitle('Select an authentication method')
+      .setData({
+        title: 'Select an authentication method'
+      })
       .setBindToRoute(this.router)
       .build())
       .then(writeNSec => {
@@ -58,7 +60,9 @@ export class AuthFooterComponent implements OnInit, OnDestroy {
     firstValueFrom(this.modalService
       .createModal(ModalNsecManagerComponent)
       .setBindToRoute(this.router)
-      .setTitle('Login')
+      .setData({
+        title: 'Login'
+      })
       .build());
   }
 }

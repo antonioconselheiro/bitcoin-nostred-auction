@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "bitcoin-nostred-auction:build:production"
+              "buildTarget": "bitcoin-nostred-auction:build:production"
             },
             "development": {
-              "browserTarget": "bitcoin-nostred-auction:build:development"
+              "buildTarget": "bitcoin-nostred-auction:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bitcoin-nostred-auction:build"
+            "buildTarget": "bitcoin-nostred-auction:build"
           }
         },
         "test": {
