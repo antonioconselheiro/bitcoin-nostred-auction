@@ -6,10 +6,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./network.component.scss']
 })
 export class NetworkComponent {
-  newRelay = 'Testing';
-  relays = ['admakda','dd','ww']
+  newRelay: string = '';
+  relays: string[] = [];
 
-  send(): void{
-    this.relays.push(this.newRelay)
+  errorMsg = '';
+
+  checkAndSend(): void{
+    let is_valid: boolean = (this.newRelay.includes('wss://') && !this.relays.includes(this.newRelay));
+    
+    if (is_valid){
+      this.errorMsg = "";
+      this.relays.push(this.newRelay);
+    }
+    else{
+      this.errorMsg = "Error";
+    }
+  }
+
+  removeRelay(index: number): void{
+    this.relays.splice(index,1);
   }
 }
