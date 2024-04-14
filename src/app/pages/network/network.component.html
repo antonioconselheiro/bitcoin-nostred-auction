@@ -1,1 +1,9 @@
-<p>network works!</p>
+<ul>
+  <li *ngFor="let relay of relays">{{relay}}</li>
+  
+</ul>
+
+
+<input type="text" [(ngModel)]="newRelay" />
+{{newRelay}}
+<button (click)="send()" >Send</button>
