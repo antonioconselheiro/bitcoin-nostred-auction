@@ -7,23 +7,25 @@ import { Component } from '@angular/core';
 })
 export class NetworkComponent {
   newRelay: string = '';
-  relays: string[] = [];
+  relays: string[] = ["wss://relay.damus"];
 
   errorMsg = '';
 
   checkAndSend(): void{
-    let is_valid: boolean = (this.newRelay.includes('wss://') && !this.relays.includes(this.newRelay));
-    
+    let is_valid: boolean = (this.newRelay.substring(0,6) == 'wss://' && !this.relays.includes(this.newRelay));
+
     if (is_valid){
       this.errorMsg = "";
       this.relays.push(this.newRelay);
     }
     else{
-      this.errorMsg = "Error";
+      this.errorMsg = "Invalid Relay";
     }
   }
 
   removeRelay(index: number): void{
     this.relays.splice(index,1);
   }
+
 }
+

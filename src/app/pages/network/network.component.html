@@ -1,13 +1,13 @@
 <div>
-  <input type="text" placeholder="wss://" [(ngModel)]="newRelay" />
-  {{errorMsg}}
-  <button (click)="checkAndSend()">Connect</button>
+  <input class="input" type="text" placeholder="wss://" [(ngModel)]="newRelay" />
+  <span class="error">{{errorMsg}}</span>
+  <button class="btn" (click)="checkAndSend()">Connect</button>
 </div>
 
-<div>
+<div class="list">
   <h3>Connected Relays:</h3>
   <ul>
     <li *ngFor="let relay of relays; let i = index">{{relay}}
-      <button (click)="removeRelay(i)">Disconnect</button></li>
+      <button class="btn" (click)="removeRelay(i)">Disconnect</button></li>
   </ul>
 </div>

@@ -1,0 +1,104 @@
+//@import "/bitcoin-nostred-auction/src/styles/components/btn.scss"
+
+.btn {
+  
+  border-color: rgba(0, 0, 0, .3);
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 15%), inset 0 -2px 0 rgb(0 0 0 / 15%);
+  padding: 0.5rem 1em;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+
+  svg {
+    margin: .25rem;
+  }
+
+  &:not(:disabled):not(.disabled) {
+    background-color: black;
+    color:white;
+
+    &:hover {
+      background-color: rgb(230 230 230/ 100%);
+    }
+
+    &:active,
+    &.active {
+      box-shadow: inset 0 0 6px 3px rgb(0 0 0 / 55%) !important;
+      color:rgb(0 0 0 / 75%) !important;
+      background-color: white;
+    }
+
+    &.btn-primary {
+      background-color: #c80505;
+      color:#ffffff;
+
+      &:hover {
+        background-color: #ae0404;
+      }
+
+      &:active,
+      &.active {
+        color:rgb(255 255 255 / 75%) !important;
+        background-color: #940303;
+      }
+    }
+  }
+}
+
+.input{
+
+  border-color: rgba(0, 0, 0, .3);
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 15%), inset 0 -2px 0 rgb(0 0 0 / 15%);
+  padding: 1rem 2.5em;
+  border-radius: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  display: block;
+  margin: auto;
+
+}
+
+.error{
+  font-size: 30px;
+  justify-content: center;
+  font-style: bold;
+  margin:0 auto;
+  display: table;
+  padding-top: 1rem;
+}
+
+.list{
+
+  border-color: rgba(0, 0, 0, .3);
+  box-shadow: inset 0 2px 0 rgb(0 0 0 / 100%), inset 0 -2px 0 rgb(0 0 0 / 1000%);
+  background-color: rgb(210 200 200/ 100%);
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  justify-content: center;
+
+
+  h3 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+
+  ul {
+    text-align: center;
+    list-style-type:none;
+
+    li {
+      font-size: 25px;
+      font-style: oblique;
+    }
+
+  }
+
+
+}
