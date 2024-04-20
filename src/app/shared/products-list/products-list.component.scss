@@ -1,5 +1,6 @@
 @import 'settings';
 
+
 .container {
   display: flex;
   justify-content: center;
@@ -22,7 +23,7 @@
   max-width: 700px;
   box-shadow: 0 5px 21px rgba(0, 0, 0, 0.08);
   background-color: #ffffff;
-  height: 200px;
+  height: 220px;
   font-size: 16px;
 
   .card-img {
@@ -89,6 +90,19 @@
     color: #a2a9ad;
     align-self: flex-end;
     font-style: italic;
+  }
+
+  .card-bar-expiration-date{
+    width: 100%;
+    background-color: white;
+    height: 20px;
+
+    .progress {
+      height: 100%;
+      background-color: red;
+      text-align: center;
+      border-radius: 30px;
+    }
   }
 
   @media(max-width: $max-mobile) {
