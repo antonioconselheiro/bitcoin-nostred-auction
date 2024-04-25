@@ -36,6 +36,11 @@ const routes: Routes = [
     path: 'auction-create',
     loadChildren: () => import('./pages/auction-create/auction-create.module').then(m => m.AuctionCreateModule)
   },
+  {
+    path: 'chat',
+    loadChildren: () => import('./pages/chats/chats.module').then(m => m.ChatsModule)
+
+  },
 
   {
     path: '',
