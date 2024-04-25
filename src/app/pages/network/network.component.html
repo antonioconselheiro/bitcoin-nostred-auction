@@ -1,1 +1,13 @@
-<p>network works!</p>
+<div>
+  <input class="input" type="text" placeholder="wss://" [(ngModel)]="newRelay" />
+  <span class="error">{{errorMsg}}</span>
+  <button class="btn" (click)="checkAndSend()">Connect</button>
+</div>
+
+<div class="list">
+  <h3>Connected Relays:</h3>
+  <ul>
+    <li *ngFor="let relay of relays; let i = index">{{relay}}
+      <button class="btn" (click)="removeRelay(i)">Disconnect</button></li>
+  </ul>
+</div>
