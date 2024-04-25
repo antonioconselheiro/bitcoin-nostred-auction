@@ -3,6 +3,7 @@ export interface IAuction {
   name: string;
   description: string;
   images: IAuctionImage[];
+  publishDate: Date,
   completionDate: Date;
   highestBid: number;
   bidderName: string

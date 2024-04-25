@@ -16,7 +16,8 @@ export class ProductsListComponent {
       description:
         'Neque porro quisquam est qui dolorem ipsum Neque porro quisquam est qui dolorem ipsum Neque porro quisquam est qui dolorem ipsumNeque porro quisquam est qui dolorem ipsumNeque porro quisquam est qui dolorem ipsumNeque porro quisquam est qui dolorem ipsumNeque porro quisquam est qui dolorem ipsum',
       bidderName: 'João Maria de Santo Agostinho',
-      completionDate: new Date(2023, 11, 16, 14, 10, 0),
+      publishDate: new Date(2024, 3, 20, 19, 32, 0),
+      completionDate: new Date(2024, 3, 21, 3, 23, 0),
       highestBid: 1000,
       images: [{
         url: 'https://i.nostr.build/resp/360p/5AkK.jpg',
@@ -28,7 +29,8 @@ export class ProductsListComponent {
       name: 'Ir no podcast 2',
       description: 'Quia dolor sit amet, consectetur, adipisci velit',
       bidderName: 'Eärendil',
-      completionDate: new Date(2023, 11, 23, 13, 10, 10),
+      publishDate: new Date(2024, 3, 20, 17, 32, 0),
+      completionDate: new Date(2024, 3, 21, 0, 0, 0),
       highestBid: 500,
       images: [{
         url: 'https://i.nostr.build/resp/360p/nb5112.png',
@@ -40,7 +42,8 @@ export class ProductsListComponent {
       name: 'Ir no podcast 3',
       description: 'Quia dolor sit amet, consectetur, adipisci velit',
       bidderName: 'Renato Crackiani',
-      completionDate: new Date(2023, 11, 23, 13, 10, 10),
+      publishDate: new Date(2024, 3, 20, 17, 32, 0),
+      completionDate: new Date(2024, 9, 3, 20, 15, 0),
       highestBid: 500,
       images: [{
         url: 'https://i.nostr.build/resp/360p/nb5112.png',
@@ -52,6 +55,7 @@ export class ProductsListComponent {
       name: 'Ir no podcast 3',
       description: 'Quia dolor sit amet, consectetur, adipisci velit',
       bidderName: 'Renato Crackiani',
+      publishDate: new Date(2023, 3, 18, 17, 32, 0),
       completionDate: new Date(2023, 11, 23, 13, 10, 10),
       highestBid: 500,
       images: [{
@@ -64,6 +68,7 @@ export class ProductsListComponent {
       name: 'Ir no podcast 3',
       description: 'Quia dolor sit amet, consectetur, adipisci velit',
       bidderName: 'Elrond',
+      publishDate: new Date(2023, 10, 23, 13, 10, 10),
       completionDate: new Date(2023, 11, 23, 13, 10, 10),
       highestBid: 500,
       images: [{
@@ -75,5 +80,25 @@ export class ProductsListComponent {
 
   trackByFn(index: number, auction: IAuction): string {
     return auction.id;
+  }
+
+  getBarPercentage(auctionId: string): string{
+    const nowDate = new Date().getTime();
+    const auction = this.auctions.find(auction => auction.id === auctionId);
+
+    const expirationAuctionDate = auction?.completionDate.getTime()
+    const publishAuctionDate = auction?.publishDate.getTime()
+
+    const remainingTime = -((nowDate || 0) - (expirationAuctionDate || 0));
+    
+    const totalTime = (expirationAuctionDate || 0) - (publishAuctionDate || 0);
+
+    let progress = (remainingTime/ totalTime) * 100;
+
+    if (progress < 0){
+      progress = 0
+    }
+
+    return (progress.toFixed(2) + '%')
   }
 }

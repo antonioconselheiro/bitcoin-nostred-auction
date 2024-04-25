@@ -20,6 +20,9 @@
               <span>{{item.bidderName}}</span>
             </div>
             <hr>
+            <div class="card-bar-expiration-date">
+              <div class="progress" [ngStyle]="{'width': getBarPercentage(item.id)}" [innerHTML]="getBarPercentage(item.id)"></div>
+            </div>
             <div class="card-details-expiration-date">
               <span>Time left: {{item.completionDate | timeLeft | async}}</span>
             </div>
