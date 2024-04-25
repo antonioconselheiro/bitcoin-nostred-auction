@@ -98,10 +98,22 @@
     height: 20px;
 
     .progress {
+      border-color: black;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+      border: 30px;
+      border-radius: 30px;
       height: 100%;
       background-color: red;
+      margin: auto;
       text-align: center;
-      border-radius: 30px;
+      background: repeating-linear-gradient(
+        -45deg,
+        red 0,
+        red 24px,
+        rgb(155, 0, 0) 20px,
+        rgb(155, 0, 0) 25px
+    );
+      
     }
   }
 

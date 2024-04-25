@@ -82,15 +82,16 @@ export class ProductsListComponent {
     return auction.id;
   }
 
-  getBarPercentage(auctionId: string): string {
+  getBarPercentage(auctionId: string): string{
     const nowDate = new Date().getTime();
     const auction = this.auctions.find(auction => auction.id === auctionId);
 
     const expirationAuctionDate = auction?.completionDate.getTime()
+    const publishAuctionDate = auction?.publishDate.getTime()
 
     const remainingTime = -((nowDate || 0) - (expirationAuctionDate || 0));
     
-    const totalTime = (expirationAuctionDate || 0) - (auction?.publishDate.getTime() || 0);
+    const totalTime = (expirationAuctionDate || 0) - (publishAuctionDate || 0);
 
     let progress = (remainingTime/ totalTime) * 100;
 
