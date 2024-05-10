@@ -101,3 +101,9 @@
     mask-image: url('~/assets/qrcode-read.svg');
   }
 }
+
+.icon-favourite {
+  div[role=img] {
+    mask-image: url('~/assets/favourite.svg');
+  }
+}

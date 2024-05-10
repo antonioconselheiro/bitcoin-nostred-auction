@@ -37,13 +37,12 @@ Follow the steps:
  * Create a branch in your forked repository, then code the feature or fix the bug;
  * Run `npm run lint` and `npm run build` in the repository;
  * Create a Pull Request from your repository to this one, with the issue in the body and some information you think could be usefull to the reviewer (print or a gif of it working will be appreciated (tools: [windows](https://www.screentogif.com/), [linux](https://linuxhint.com/install-peek-animated-gif-recorder-linux/)));
- * The reviewer can ask some changes, always expect for this and don't be mad when ask changes, this is the GIT Flow process;
+ * The reviewer can ask some changes, always expect for this and don't be mad when ask changes, this is the process;
  * When you get approved your branch can be merged, if you don't merge it, we will do.
 
 # Tools
 ## Devcontainer
-I do know if this work on Windows or Mac, but surely run on linux.
-If you _suffer of_ Windows or Mac and want to contribute to the functioning of the devcontainer for these platforms, feel free to open an issue and start the task.
+Run the `.devcontainer/setup.sh` to configure .devcontainer volumes and credentials. Open devcontainer with: `devcontainer open .`
 
 ### Para os brasileiros (pt-BR)
 Veja como o instalar docker, docker-compose e devcontainer em [meu vídeo em português](https://odysee.com/@anarcanudos:5/instalacao-do-docker-docker-compose-e-devcontainer:9)

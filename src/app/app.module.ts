@@ -14,6 +14,7 @@ import { NostrApiModule } from '@shared/nostr-api/nostr-api.module';
 import { HtmlfyServiceModule } from '@shared/htmlfy/htmlfy-service.module';
 import { ErrorModule } from '@shared/error/error.module';
 import { AuthFooterModule } from '@shared/auth-footer/auth-footer.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthFooterModule } from '@shared/auth-footer/auth-footer.module';
     ModalAccountManagerModule,
     ModalChooseCamModule,
     ModalNsecManagerModule,
-    ModalPinManagerModule
+    ModalPinManagerModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [
     AppComponent

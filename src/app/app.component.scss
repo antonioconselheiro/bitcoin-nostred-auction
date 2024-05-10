@@ -21,13 +21,13 @@ header {
 }
 
 .fixed-header {
-  position: fixed;
+  position: sticky;
   top: 0;
   right: 0;
   left: 0;
 }
 
 .outlet-content {
-  padding-top: 94px;
+  padding-top: 15px;
   padding-bottom: 65px;
 }
