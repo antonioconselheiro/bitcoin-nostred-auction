@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { NostrUser } from '@domain/nostr-user';
 import { IProfile } from '@domain/profile.interface';
-import * as CryptoJS from 'crypto-js';
 import { IUnauthenticatedUser } from './unauthenticated-user';
+import { nip19 } from 'nostr-tools';
+import * as nip49 from 'nostr-tools/nip49';
 
 @Injectable()
 export class ProfileEncrypt {
 
-  private readonly mode = CryptoJS.mode.CBC;
-  private readonly padding = CryptoJS.pad.Pkcs7;
-
-  encryptAccount(profile: IProfile, pin?: string | void | null): IUnauthenticatedUser | IUnauthenticatedUser & { nsecEncrypted: string } | null {
+  encryptAccount(profile: IProfile, pin?: string | void | null): IUnauthenticatedUser | null
+  encryptAccount(profile: IProfile, pin: string): IUnauthenticatedUser & { ncryptsec: string } | null;
+  encryptAccount(profile: IProfile, pin?: string | void | null): IUnauthenticatedUser | IUnauthenticatedUser & { ncryptsec: string } | null {
     const nostrSecret = profile.user.nostrSecret;
     const displayName = profile.display_name || profile.name;
     const picture = profile.picture || ''; // TODO: fixar uma imagem padrão
@@ -19,50 +19,38 @@ export class ProfileEncrypt {
       return null;
     }
 
-    const initializationVector = CryptoJS.enc.Hex.parse(
-      CryptoJS.lib.WordArray.random(128/8).toString()
-    );
-
     const account: IUnauthenticatedUser = {
       picture,
       displayName,
       npub: profile.user.nostrPublic,
       nip05: profile.nip05,
-      nip05valid: profile.nip05valid,
-      iv: String(initializationVector)
+      nip05valid: profile.nip05valid
     };
 
     if (pin) {
-      const nsecEncrypted = this.encryptAES(nostrSecret, pin, initializationVector);
-      account.nsecEncrypted = String(nsecEncrypted);
+      const ncryptsec = this.encryptNostrSecret(nostrSecret, pin);
+      account.ncryptsec = String(ncryptsec);
     }
 
     return account;
   }
 
 
-  encryptAES(nostrSecret: string, key: string, initializationVector: CryptoJS.lib.WordArray) {
-    return CryptoJS.AES.encrypt(nostrSecret, key, {
-      iv: initializationVector,
-      mode: this.mode,
-      padding: this.padding
-    });
+  encryptNostrSecret(nostrSecret: string, password: string): string {
+    const decoded = nip19.decode(nostrSecret);
+    const bytes = decoded.data as Uint8Array; 
+
+    return nip49.encrypt(bytes, password);
   }
 
-  decryptAES(cypher: string, key: string, iv: string) {
-    const decrypted = CryptoJS.AES.decrypt(cypher, key, {
-      iv: CryptoJS.enc.Hex.parse(iv),
-      mode: this.mode,
-      padding: this.padding
-    });
-
-    return CryptoJS.enc.Utf8.stringify(decrypted);
+  decryptNcryptsec(ncryptsec: string, password: string) {
+    return nip19.nsecEncode(nip49.decrypt(ncryptsec, password));
   }
 
   decryptAccount(
-    account: IUnauthenticatedUser & { nsecEncrypted: string }, pin: string
+    account: IUnauthenticatedUser & { ncryptsec: string }, pin: string
   ): Required<NostrUser> {
-    const nsec = this.decryptAES(account.nsecEncrypted, pin, account.iv);
+    const nsec = this.decryptNcryptsec(account.ncryptsec, pin);
     return NostrUser.fromNostrSecret(nsec);
   }
 }

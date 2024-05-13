@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
 import { MainModalModule } from '@shared/main-modal/main-modal.module';
-import { CryptModule } from '@shared/crypt/crypt.module';
 import { UtilModule } from '@shared/util/util.module';
 import { ProfileServiceModule } from '@shared/profile-service/profile-service.module';
 import { ModalChooseCamModule } from '@shared/modal-choose-cam/modal-choose-cam.module';
@@ -24,7 +23,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     MainModalModule,
     ErrorModule,
-    CryptModule,
     ProfileServiceModule,
     UtilModule,
     AppRouting,

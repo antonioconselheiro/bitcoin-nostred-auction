@@ -109,7 +109,7 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
     if (
       account &&
       rememberAccount &&
-      this.authenticatedProfile$.hasEncriptedNostrSecret(account)      
+      this.authenticatedProfile$.hasNcryptsec(account)      
     ) {
       this.authenticatedProfile$.authenticateAccount(account, pin);
     }

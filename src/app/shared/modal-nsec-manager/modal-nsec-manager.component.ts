@@ -46,7 +46,6 @@ export class ModalNsecManagerComponent extends ModalableDirective<{
   }
 
   async login(): Promise<void> {
-    debugger;
     if (!this.accountForm.valid) {
       return Promise.resolve();
     }
@@ -81,8 +80,8 @@ export class ModalNsecManagerComponent extends ModalableDirective<{
 
   private isAccountNostrSecretEncrypted(
     account: IUnauthenticatedUser | null
-  ): account is IUnauthenticatedUser & { nsecEncrypted: string; } {
-    return account && account.nsecEncrypted && true || false;
+  ): account is IUnauthenticatedUser & { ncryptsec: string; } {
+    return account && account.ncryptsec && true || false;
   }
 
   toggleShowNsec(): void {
