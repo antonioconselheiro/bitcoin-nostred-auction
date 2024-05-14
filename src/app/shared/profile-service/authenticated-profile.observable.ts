@@ -46,26 +46,15 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
     return this.autenticate(NostrUser.fromNostrSecret(nsec));
   }
 
-  authenticateAccount(account: IUnauthenticatedUser & { nsecEncrypted: string }, pin: string): Promise<IProfile> {
+  authenticateAccount(account: IUnauthenticatedUser & { ncryptsec: string }, pin: string): Promise<IProfile> {
     const user = this.profileEncrypt.decryptAccount(account, pin);
     return this.autenticate(user);
   }
 
-  authenticateEncryptedEncode(encryptedQueryString: string, pin: string): Promise<IProfile> {
-    const { cypher, iv } = this.castEncryptedQueryStringToObject(encryptedQueryString);
-    const nsec = this.profileEncrypt.decryptAES(cypher, pin, iv);
+  authenticateEncryptedEncode(ncryptsec: string, pin: string): Promise<IProfile> {
+    const nsec = this.profileEncrypt.decryptNcryptsec(ncryptsec, pin);
 
     return this.autenticate(NostrUser.fromNostrSecret(nsec));
-  }
-
-  private castEncryptedQueryStringToObject(encryptedQueryString: string): {
-    cypher: string;
-    iv: string;
-  } {
-    const cypher = encryptedQueryString.replace(/^encrypted:.*;/, '');
-    const iv = encryptedQueryString.replace(/^.*\?iv=|;.*$/g, '');
-
-    return { cypher, iv };
   }
 
   private autenticate(user: Required<NostrUser>): Promise<IProfile> {
@@ -79,10 +68,10 @@ export class AuthenticatedProfileObservable extends BehaviorSubject<IProfile | n
       });
   }
 
-  hasEncriptedNostrSecret(
+  hasNcryptsec(
     account: IUnauthenticatedUser
-  ): account is IUnauthenticatedUser & { nsecEncrypted: string } {
-    if (account.nsecEncrypted) {
+  ): account is IUnauthenticatedUser & { ncryptsec: string } {
+    if (account.ncryptsec) {
       return true;
     }
 

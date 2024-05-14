@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { ModalableDirective } from '@belomonte/async-modal-ngx';
 import { Subject } from 'rxjs';
 import QrScanner from 'qr-scanner';
 
@@ -8,13 +8,19 @@ import QrScanner from 'qr-scanner';
   templateUrl: './modal-choose-cam.component.html',
   styleUrls: ['./modal-choose-cam.component.scss']
 })
-export class ModalChooseCamComponent extends ModalableDirective<Array<QrScanner.Camera>, QrScanner.Camera> {
+export class ModalChooseCamComponent extends ModalableDirective<{
+  title: string;
+  cameras: QrScanner.Camera[];
+}, QrScanner.Camera> {
   override response = new Subject<QrScanner.Camera | void>();
 
   cameras: QrScanner.Camera[] = [];
 
-  override onInjectData(data: QrScanner.Camera[]): void {
-    this.cameras = data;
+  override onInjectData(data: {
+    title: string;
+    cameras: QrScanner.Camera[]
+  }): void {
+    this.cameras = data.cameras;
   }
 
   onChooseCamera(camera: QrScanner.Camera): void {

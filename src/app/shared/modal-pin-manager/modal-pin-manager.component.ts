@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ModalableDirective } from '@shared/modal/modalable.directive';
+import { ModalableDirective } from '@belomonte/async-modal-ngx';
 import { Subject } from 'rxjs';
 import { IPinManagerOptions } from './pin-manager-options.interface';
 
@@ -10,7 +10,8 @@ import { IPinManagerOptions } from './pin-manager-options.interface';
   styleUrls: ['./modal-pin-manager.component.scss']
 })
 export class ModalPinManagerComponent extends ModalableDirective<{
-  showCheckboxToRememberAccount?: boolean
+  title: string;
+  showCheckboxToRememberAccount?: boolean;
 }, IPinManagerOptions> {
 
   showPin = false;
@@ -31,7 +32,7 @@ export class ModalPinManagerComponent extends ModalableDirective<{
     super();
   }
 
-  override onInjectData(data: { showCheckboxToRememberAccount?: boolean | undefined; }): void {
+  override onInjectData(data: { title: string; showCheckboxToRememberAccount?: boolean | undefined; }): void {
     this.showCheckboxToRememberAccount = data.showCheckboxToRememberAccount || false;
   }
 
