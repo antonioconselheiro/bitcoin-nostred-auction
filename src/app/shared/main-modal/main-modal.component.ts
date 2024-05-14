@@ -18,7 +18,7 @@ export class MainModalComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.display')
   get display(): string {
-    return this.isOpen ? 'block' : 'none';
+    return this.isOpen ? 'flex' : 'none';
   }
 
   private subscriptions = new Subscription();

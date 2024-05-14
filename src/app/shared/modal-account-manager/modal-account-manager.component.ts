@@ -77,6 +77,10 @@ export class ModalAccountManagerComponent
       .catch(e => this.error$.next(e));
   }
 
+  chooseListenSigner(): void {
+    
+  }
+
   logout(): void {
     this.authenticatedProfile$.logout();
   }
