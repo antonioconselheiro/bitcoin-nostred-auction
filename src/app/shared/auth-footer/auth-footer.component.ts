@@ -5,8 +5,8 @@ import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalAccountManagerComponent } from '@shared/modal-account-manager/modal-account-manager.component';
 import { ModalNsecManagerComponent } from '@shared/modal-nsec-manager/modal-nsec-manager.component';
 import { ModalService } from '@belomonte/async-modal-ngx';
-import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { Subscription, firstValueFrom } from 'rxjs';
+import { AuthenticatedProfileObservable } from '@shared/nostr-credential/authenticated-profile.observable';
 
 @Component({
   selector: 'auc-auth-footer',

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IProfile } from '@domain/profile.interface';
 import { BehaviorSubject } from 'rxjs';
-import { ProfileEncrypt } from './profile.encrypt';
-import { ProfileProxy } from './profile.proxy';
 import { NostrUser } from '@domain/nostr-user';
-import { IUnauthenticatedUser } from './unauthenticated-user';
+import { IUnauthenticatedUser } from '@shared/profile-service/unauthenticated-user';
+import { ProfileProxy } from '@shared/profile-service/profile.proxy';
+import { ProfileEncrypt } from '@shared/profile-service/profile.encrypt';
 
 /**
  * This class responsible for caching event information

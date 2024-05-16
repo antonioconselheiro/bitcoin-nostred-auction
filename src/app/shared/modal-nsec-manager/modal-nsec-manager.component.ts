@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CustomValidator } from '@shared/custom-validator/custom-validator';
 import { ModalableDirective } from '@belomonte/async-modal-ngx';
-import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
-import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { ProfileProxy } from '@shared/profile-service/profile.proxy';
 import { IUnauthenticatedUser } from '@shared/profile-service/unauthenticated-user';
 import { Subject } from 'rxjs';
+import { AccountManagerStatefull } from '@shared/nostr-credential/account-manager.statefull';
+import { AuthenticatedProfileObservable } from '@shared/nostr-credential/authenticated-profile.observable';
 
 @Component({
   selector: 'auc-modal-nsec-manager',

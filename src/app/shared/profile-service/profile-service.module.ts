@@ -6,7 +6,7 @@ import { ProfileConverter } from './profile.converter';
 import { ProfileCache } from './profile.cache';
 import { ProfileProxy } from './profile.proxy';
 import { ProfileEncrypt } from './profile.encrypt';
-import { AccountManagerStatefull } from './account-manager.statefull';
+import { AccountManagerStatefull } from '../nostr-credential/account-manager.statefull';
 
 @NgModule({
   imports: [

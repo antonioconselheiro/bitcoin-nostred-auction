@@ -4,11 +4,11 @@ import { MainErrorObservable } from '@shared/error/main-error.observable';
 import { ModalChooseCamComponent } from '@shared/modal-choose-cam/modal-choose-cam.component';
 import { ModalPinManagerComponent } from '@shared/modal-pin-manager/modal-pin-manager.component';
 import { ModalService } from '@belomonte/async-modal-ngx';
-import { AccountManagerStatefull } from '@shared/profile-service/account-manager.statefull';
-import { AuthenticatedProfileObservable } from '@shared/profile-service/authenticated-profile.observable';
 import { ProfileProxy } from '@shared/profile-service/profile.proxy';
 import QrScanner from 'qr-scanner';
 import { firstValueFrom } from 'rxjs';
+import { AccountManagerStatefull } from '@shared/nostr-credential/account-manager.statefull';
+import { AuthenticatedProfileObservable } from '@shared/nostr-credential/authenticated-profile.observable';
 
 @Component({
   selector: 'auc-qrcode-read',
@@ -80,7 +80,7 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
     if (/^nsec/.test(result)) {
       return this.triggerResultAsNostrSecret(result);
     } else if (/^encrypted:aes/.test(result)) {
-      return this.triggerResultAsEncryptedEncodedNostrSecred(result);
+      return this.triggerResultAsEncryptedEncodedNostrSecret(result);
     } else {
       console.error('There is no authentication content into this qrcode, content read: ' + result);
       return Promise.resolve();
@@ -115,7 +115,7 @@ export class QrcodeReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async triggerResultAsEncryptedEncodedNostrSecred(
+  private async triggerResultAsEncryptedEncodedNostrSecret(
     encryptedEncode: string
   ): Promise<void> {
     const resultset = await firstValueFrom(this.modalService

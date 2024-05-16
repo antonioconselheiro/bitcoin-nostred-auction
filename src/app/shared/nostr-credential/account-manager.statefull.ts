@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IProfile } from '@domain/profile.interface';
 import { ProfileEncrypt } from '@shared/profile-service/profile.encrypt';
 import { BehaviorSubject } from 'rxjs';
-import { IUnauthenticatedUser } from './unauthenticated-user';
+import { IUnauthenticatedUser } from '../profile-service/unauthenticated-user';
 
 @Injectable()
 export class AccountManagerStatefull {
@@ -49,8 +49,7 @@ export class AccountManagerStatefull {
   }
 
   private update(): void {
-    //  FIXME: criar um mecanismo que persita dados
-    //  automaticamente em localStorage ou no storage local
+    //  FIXME: criar um mecanismo para acessar storage?
     localStorage.setItem(this.storageKey, JSON.stringify(this.accounts))
     this.accountsSubject.next(Object.values(this.accounts));
   }

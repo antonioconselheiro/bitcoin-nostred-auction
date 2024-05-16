@@ -1,5 +1,5 @@
 {
-  "name": "Existing Docker Compose (Extend)",
+  "name": "Dev Environment for Bitcoin Nostred Auction",
   "dockerComposeFile": [
     "docker-compose.yml"
   ],

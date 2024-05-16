@@ -1,14 +1,13 @@
 import { Injectable } from "@angular/core";
-import { IProfile } from "../../domain/profile.interface";
-import { ProfileConverter } from "./profile.converter";
-import { ProfileCache } from "./profile.cache";
-import { ProfileApi } from "./profile.api";
-import { Event } from 'nostr-tools';
-import { NostrEventKind } from "@domain/nostr-event-kind.enum";
 import { DataLoadType } from "@domain/data-load.type";
 import { TNostrPublic } from "@domain/nostr-public.type";
 import { NostrUser } from "@domain/nostr-user";
-import { AccountManagerStatefull } from "./account-manager.statefull";
+import { Event } from 'nostr-tools';
+import { IProfile } from "../../domain/profile.interface";
+import { AccountManagerStatefull } from "../nostr-credential/account-manager.statefull";
+import { ProfileApi } from "./profile.api";
+import { ProfileCache } from "./profile.cache";
+import { ProfileConverter } from "./profile.converter";
 import { IUnauthenticatedUser } from "./unauthenticated-user";
 
 /**
