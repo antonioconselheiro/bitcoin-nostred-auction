@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthenticatedProfileObservable } from './authenticated-profile.observable';
 import { ProfileApi } from './profile.api';
 import { ProfileConverter } from './profile.converter';
 import { ProfileCache } from './profile.cache';
 import { ProfileProxy } from './profile.proxy';
 import { ProfileEncrypt } from './profile.encrypt';
 import { AccountManagerStatefull } from '../nostr-credential/account-manager.statefull';
+import { AuthenticatedProfileObservable } from '@shared/nostr-credential/authenticated-profile.observable';
 
 @NgModule({
   imports: [

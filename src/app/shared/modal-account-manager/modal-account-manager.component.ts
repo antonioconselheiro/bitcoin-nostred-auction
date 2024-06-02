@@ -69,6 +69,10 @@ export class ModalAccountManagerComponent
     this.close();
   }
 
+  chooseListenSigner(): void {
+    //
+  }
+
   chooseFromQrcode(): void {
     this.response.next(false);
     this.close();
