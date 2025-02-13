@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   bitcoin-nostred-auction-dev:
     image: bitcoin-nostred-auction-dev

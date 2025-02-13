@@ -17,6 +17,7 @@ import { AuthenticatedProfileObservable } from '@shared/nostr-credential/authent
     ProfileCache,
     ProfileProxy,
     ProfileEncrypt,
+    
     ProfileConverter,
     AccountManagerStatefull,
     AuthenticatedProfileObservable
